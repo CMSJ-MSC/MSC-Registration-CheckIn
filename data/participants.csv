@@ -1,5 +1,5 @@
 Family ID,First Name,Last Name,checkin,Grade/Age Group Category,roomType,roomNumber,RegistrationType,SponsorshipType,AccommodationType
-1,Yajman,cmsj,,Adult,,,sponsorship,gold,
+1,Yajman,cmsj,checked-in,Adult,,,sponsorship,gold,
 4,a,d,,CHYK Non-working,,,sponsorship,bronze,
 5,Ta,Ba,,10,,,standard,,
 6,SJ,SH,,CHYK Non-working,,,standard,,
@@ -68,7 +68,7 @@ Family ID,First Name,Last Name,checkin,Grade/Age Group Category,roomType,roomNum
 72,saSsas,saSS,,31 to 35 years old,,,standard,,
 73,S,R,,Infant/ShishuVihar,,,sponsorship,pramukh,
 74,a,a,,36 to 59 years old,,,standard,,
-36,Parag,Bhatt,,36 to 59 years old,,,standard,,
+36,Parag,Bhatt,checked-in,36 to 59 years old,,,standard,,
 76,a,d,,60 years and above,,,standard,,
 77,a,d,,CHYK Non-working,,,standard,,
 78,a,d,,4,,,standard,,
@@ -78,4 +78,4 @@ Family ID,First Name,Last Name,checkin,Grade/Age Group Category,roomType,roomNum
 82,a,d,,30 to 35 years old,,,sponsorship,pramukh,
 83,v,v,,CHYK Working,,,standard,,
 84,a,d,,36 to 59 years old,,,standard,,
-36,Rishi,Bhatt,,CHYK Non-working,,,standard,,
+36,Rishi,Bhatt,checked-in,CHYK Non-working,,,standard,,

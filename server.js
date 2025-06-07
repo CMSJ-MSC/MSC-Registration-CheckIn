@@ -4,6 +4,7 @@ const path = require('path');
 const csv = require('csv-parser');
 const bodyParser = require('body-parser');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+const XLSX = require('xlsx');
 
 const app = express();
 const PORT = 3000;
@@ -69,15 +70,34 @@ app.get('/participants', async (req, res) => {
 });
 
 // 📥 Allow download of the current CSV
-app.get('/download', (req, res) => {
-  const filePath = path.join(__dirname, 'data/participants.csv');
-  res.download(filePath, 'MSC-Checkin.csv', (err) => {
-    if (err) {
-      console.error("Download error:", err);
-      res.status(500).send("Unable to download the file.");
+app.get('/download', async (req, res) => {
+    const format = req.query.format || 'csv';
+    const participants = await loadParticipants();
+  
+    if (format === 'xlsx') {
+      const worksheet = XLSX.utils.json_to_sheet(participants);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Participants');
+  
+      const filePath = path.join(__dirname, 'data/MSC-Checkin.xlsx');
+      XLSX.writeFile(workbook, filePath);
+  
+      return res.download(filePath, 'MSC-Checkin.xlsx', err => {
+        if (err) {
+          console.error('XLSX download error:', err);
+          res.status(500).send('Unable to download XLSX.');
+        }
+      });
+    } else {
+      const filePath = path.join(__dirname, 'data/participants.csv');
+      return res.download(filePath, 'MSC-Checkin.csv', err => {
+        if (err) {
+          console.error('CSV download error:', err);
+          res.status(500).send('Unable to download CSV.');
+        }
+      });
     }
   });
-});
 
 // 🚀 Start server
 app.listen(PORT, () => {

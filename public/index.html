@@ -83,15 +83,24 @@
           Clear
         </button>
         
-        <button 
-          onclick="window.location.href='/download'" 
-          class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded-md transition-colors duration-200 flex items-center gap-2"
-        >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-          </svg>
-          Download CSV
-        </button>
+        <div class="relative inline-block text-left">
+            <button 
+              onclick="toggleDropdown()" 
+              class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded-md transition-colors duration-200 flex items-center gap-2"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                </path>
+              </svg>
+              Download
+            </button>
+          
+            <div id="downloadDropdown" class="hidden absolute z-10 mt-2 w-48 bg-white rounded-md shadow-lg">
+              <a href="/download?format=csv" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Download CSV</a>
+              <a href="/download?format=xlsx" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Download XLSX</a>
+            </div>
+          </div>
         
         <button 
           onclick="resetAllCheckins()"
@@ -258,6 +267,19 @@
       document.getElementById('searchLastName').value = '';
       loadData();
     }
+
+    function toggleDropdown() {
+    const dropdown = document.getElementById('downloadDropdown');
+    dropdown.classList.toggle('hidden');
+  }
+
+  // Optional: close dropdown when clicking elsewhere
+  window.addEventListener('click', function (e) {
+    const dropdown = document.getElementById('downloadDropdown');
+    if (!e.target.closest('.relative')) {
+      dropdown.classList.add('hidden');
+    }
+  });
 
     // Add keyboard shortcuts
     document.addEventListener('keydown', function(e) {
