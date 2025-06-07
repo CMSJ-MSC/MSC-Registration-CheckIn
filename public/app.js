@@ -84,6 +84,11 @@ async function loadData() {
         tr.appendChild(td);
         tbody.appendChild(tr);
       });
+
+      // Apply current filter after loading data
+      if (currentFilter !== 'all') {
+        filterByStatus(currentFilter);
+      }
     } catch (error) {
       console.error('Failed to load data:', error);
     }
@@ -148,5 +153,44 @@ window.addEventListener('click', function (e) {
       resetSearch();
     }
   });
+
+  function toggleFilterDropdown() {
+    const dropdown = document.getElementById('filterDropdown');
+    dropdown.classList.toggle('hidden');
+  }
+
+  // Close filter dropdown when clicking elsewhere
+  window.addEventListener('click', function (e) {
+    const filterDropdown = document.getElementById('filterDropdown');
+    const downloadDropdown = document.getElementById('downloadDropdown');
+    if (!e.target.closest('.relative')) {
+      filterDropdown.classList.add('hidden');
+      downloadDropdown.classList.add('hidden');
+    }
+  });
+
+  let currentFilter = 'all';
+
+  function filterByStatus(status) {
+    currentFilter = status;
+    const tbody = document.querySelector('#regTable tbody');
+    const rows = tbody.getElementsByTagName('tr');
+    
+    for (let row of rows) {
+      const statusCell = row.querySelector('td:nth-child(5)');
+      const isCheckedIn = statusCell.textContent.includes('Checked In');
+      
+      if (status === 'all' || 
+          (status === 'checked-in' && isCheckedIn) || 
+          (status === 'not-checked-in' && !isCheckedIn)) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    }
+    
+    // Hide the dropdown after selection
+    document.getElementById('filterDropdown').classList.add('hidden');
+  }
 
   loadData(); // Initial load
