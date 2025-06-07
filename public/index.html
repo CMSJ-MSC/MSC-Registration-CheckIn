@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MSC Check-In App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#3b82f6',
+            secondary: '#1e40af',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg">
+    <div class="container mx-auto px-6 py-6">
+      <h1 class="text-3xl font-bold text-center">MSC Participant Check-In</h1>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-6 py-8">
+    <!-- Search Section -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Search Participants</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Family ID</label>
+          <input 
+            type="text" 
+            id="searchFamilyID" 
+            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            placeholder="Enter Family ID"
+          />
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+          <input 
+            type="text" 
+            id="searchFirstName" 
+            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            placeholder="Enter First Name"
+          />
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+          <input 
+            type="text" 
+            id="searchLastName" 
+            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            placeholder="Enter Last Name"
+          />
+        </div>
+      </div>
+      
+      <div class="flex flex-wrap gap-3">
+        <button 
+          onclick="loadData()" 
+          class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition-colors duration-200 flex items-center gap-2"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          Search
+        </button>
+        
+        <button 
+          onclick="resetSearch()" 
+          class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-6 rounded-md transition-colors duration-200 flex items-center gap-2"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+          Clear
+        </button>
+        
+        <button 
+          onclick="window.location.href='/download'" 
+          class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded-md transition-colors duration-200 flex items-center gap-2"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+          Download CSV
+        </button>
+        
+        <button 
+          onclick="resetAllCheckins()"
+          class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-6 rounded-md transition-colors duration-200 flex items-center gap-2"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+          </svg>
+          Reset
+        </button>
+      </div>
+    </div>
+
+    <!-- Results Section -->
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+      <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+        <h3 class="text-lg font-semibold text-gray-800">Participant Results</h3>
+      </div>
+      
+      <div class="overflow-x-auto">
+        <table id="regTable" class="w-full">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Family ID</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">First Name</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Name</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Grade/Age Group</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Check In</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200"></tbody>
+        </table>
+      </div>
+      
+      <!-- Empty state -->
+      <div id="emptyState" class="hidden text-center py-12">
+        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        <h3 class="mt-2 text-sm font-medium text-gray-900">No participants found</h3>
+        <p class="mt-1 text-sm text-gray-500">Try adjusting your search criteria</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    async function loadData() {
+      try {
+        const res = await fetch('/participants');
+        const data = await res.json();
+
+        const familyID = document.getElementById('searchFamilyID').value.trim().toLowerCase();
+        const firstName = document.getElementById('searchFirstName').value.trim().toLowerCase();
+        const lastName = document.getElementById('searchLastName').value.trim().toLowerCase();
+
+        const tbody = document.querySelector('#regTable tbody');
+        const emptyState = document.getElementById('emptyState');
+        tbody.innerHTML = '';
+
+        const filtered = data.filter(member => {
+          const fID = (member['Family ID'] || '').toLowerCase();
+          const fName = (member['First Name'] || '').toLowerCase();
+          const lName = (member['Last Name'] || '').toLowerCase();
+
+          return (
+            (familyID && fID === familyID) ||
+            (firstName && lastName && fName === firstName && lName === lastName) ||
+            (!familyID && !firstName && !lastName)  // Show all if no search
+          );
+        });
+
+        if (filtered.length === 0) {
+          emptyState.classList.remove('hidden');
+          return;
+        } else {
+          emptyState.classList.add('hidden');
+        }
+
+        filtered.forEach((member, index) => {
+          const tr = document.createElement('tr');
+          tr.className = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+          
+          const isCheckedIn = member.checkin === 'checked-in';
+
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.checked = isCheckedIn;
+          checkbox.className = 'h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded';
+
+          checkbox.onchange = async () => {
+            try {
+              await fetch('/checkin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  firstName: member['First Name'],
+                  lastName: member['Last Name'],
+                  checkedIn: checkbox.checked
+                })
+              });
+              loadData(); // Refresh after check-in
+            } catch (error) {
+              console.error('Check-in failed:', error);
+              // Revert checkbox state on error
+              checkbox.checked = !checkbox.checked;
+            }
+          };
+
+          tr.innerHTML = `
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${member['Family ID'] || ''}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['First Name'] || ''}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Last Name'] || ''}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Grade/Age Group Category'] || ''}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${isCheckedIn ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                ${isCheckedIn ? '✅ Checked In' : '❌ Not Checked In'}
+              </span>
+            </td>
+          `;
+
+          const td = document.createElement('td');
+          td.className = 'px-6 py-4 whitespace-nowrap text-sm text-gray-900';
+          td.appendChild(checkbox);
+          tr.appendChild(td);
+          tbody.appendChild(tr);
+        });
+      } catch (error) {
+        console.error('Failed to load data:', error);
+      }
+    }
+    async function resetAllCheckins() {
+      if (!confirm('Are you sure you want to clear all check-ins? This cannot be undone.')) {
+        return;
+      }
+
+      try {
+        const response = await fetch('/participants');
+        const participants = await response.json();
+
+        // Reset each participant's check-in status
+        for (const participant of participants) {
+          await fetch('/checkin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              firstName: participant['First Name'],
+              lastName: participant['Last Name'], 
+              checkedIn: false
+            })
+          });
+        }
+
+        loadData(); // Refresh the display
+      } catch (error) {
+        console.error('Failed to reset check-ins:', error);
+        alert('Failed to reset check-ins. Please try again.');
+      }
+    }
+
+    function resetSearch() {
+      document.getElementById('searchFamilyID').value = '';
+      document.getElementById('searchFirstName').value = '';
+      document.getElementById('searchLastName').value = '';
+      loadData();
+    }
+
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && (e.target.id.includes('search'))) {
+        loadData();
+      }
+      if (e.key === 'Escape') {
+        resetSearch();
+      }
+    });
+
+    loadData(); // Initial load
+  </script>
+</body>
+</html>
