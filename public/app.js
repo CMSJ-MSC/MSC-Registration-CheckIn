@@ -6,6 +6,7 @@ async function loadData() {
       const familyID = document.getElementById('searchFamilyID').value.trim().toLowerCase();
       const firstName = document.getElementById('searchFirstName').value.trim().toLowerCase();
       const lastName = document.getElementById('searchLastName').value.trim().toLowerCase();
+      const email = document.getElementById('searchEmail').value.trim().toLowerCase();
       const resultsSection = document.getElementById('resultsSection');
 
       // Add validation for first name and last name
@@ -15,7 +16,7 @@ async function loadData() {
       }
 
       // Hide results section if no search criteria
-      if (!familyID && !firstName && !lastName) {
+      if (!familyID && !firstName && !lastName && !email) {
         resultsSection.classList.add('hidden');
         return;
       }
@@ -31,10 +32,12 @@ async function loadData() {
         const fID = (member['Family ID'] || '').toLowerCase();
         const fName = (member['First Name'] || '').toLowerCase();
         const lName = (member['Last Name'] || '').toLowerCase();
+        const memberEmail = (member['Email'] || '').toLowerCase();
 
         return (
           (familyID && fID === familyID) ||
-          (firstName && lastName && fName === firstName && lName === lastName)
+          (firstName && lastName && fName === firstName && lName === lastName) ||
+          (email && memberEmail === email)
         );
       });
 
@@ -79,7 +82,12 @@ async function loadData() {
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${member['Family ID'] || ''}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['First Name'] || ''}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Last Name'] || ''}</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Grade/Age Group Category'] || ''}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Contact First Name'] || ''}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Contact Last Name'] || ''}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Email'] || ''}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Age Group'] || ''}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['PAID'] || ''}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Decided'] || ''}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${isCheckedIn ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
               ${isCheckedIn ? '✅ Checked In' : '❌ Not Checked In'}
@@ -135,6 +143,7 @@ async function loadData() {
     document.getElementById('searchFamilyID').value = '';
     document.getElementById('searchFirstName').value = '';
     document.getElementById('searchLastName').value = '';
+    document.getElementById('searchEmail').value = '';
     // Clear any custom validation messages
     document.getElementById('searchLastName').setCustomValidity('');
     loadData();

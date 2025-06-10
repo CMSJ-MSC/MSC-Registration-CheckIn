@@ -20,7 +20,22 @@ function loadParticipants() {
     const results = [];
     fs.createReadStream(CSV_PATH)
       .pipe(csv({ mapHeaders: ({ header }) => header.trim() }))
-      .on('data', (data) => results.push(data))
+      .on('data', (data) => {
+        // Transform the data to match our application's needs
+        const transformed = {
+          'Family ID': data['Family ID'] || '',
+          'First Name': data['Participants.name.first'] || '',
+          'Last Name': data['Participants.name.last'] || '',
+          'Contact First Name': data['ContactName.first'] || '',
+          'Contact Last Name': data['ContactName.last'] || '',
+          'Email': data['Email'] || '',
+          'Age Group': data['Age Group'] || '',
+          'PAID': data['PAID'] || '',
+          'Decided': data['Decided'] || '',
+          'checkin': data['checkin'] || '' // Preserve check-in status if it exists
+        };
+        results.push(transformed);
+      })
       .on('end', () => resolve(results));
   });
 }
@@ -29,22 +44,41 @@ function loadParticipants() {
 async function saveParticipants(participants) {
   const csvWriter = createCsvWriter({
     path: CSV_PATH,
-    header: Object.keys(participants[0]).map(h => ({ id: h, title: h }))
+    header: [
+      { id: 'Family ID', title: 'Family ID' },
+      { id: 'ContactName.last', title: 'ContactName.last' },
+      { id: 'ContactName.first', title: 'ContactName.first' },
+      { id: 'Email', title: 'Email' },
+      { id: 'Participants.name.last', title: 'Participants.name.last' },
+      { id: 'Participants.name.first', title: 'Participants.name.first' },
+      { id: 'Age Group', title: 'Age Group' },
+      { id: 'PAID', title: 'PAID' },
+      { id: 'Decided', title: 'Decided' },
+      { id: 'checkin', title: 'checkin' }
+    ]
   });
-  await csvWriter.writeRecords(participants);
+
+  // Transform back to original format
+  const transformed = participants.map(p => ({
+    'Family ID': p['Family ID'],
+    'ContactName.last': p['Contact Last Name'],
+    'ContactName.first': p['Contact First Name'],
+    'Email': p['Email'],
+    'Participants.name.last': p['Last Name'],
+    'Participants.name.first': p['First Name'],
+    'Age Group': p['Age Group'],
+    'PAID': p['PAID'],
+    'Decided': p['Decided'],
+    'checkin': p['checkin']
+  }));
+
+  await csvWriter.writeRecords(transformed);
 }
 
 // ✅ Update participant's check-in status
 app.post('/checkin', async (req, res) => {
   const { firstName, lastName, checkedIn } = req.body;
   const participants = await loadParticipants();
-
-  // Optional: Debug log missing name rows
-  participants.forEach((p, i) => {
-    if (!p['First Name'] || !p['Last Name']) {
-      console.log(`⚠️ Missing name at row ${i + 2}:`, p);
-    }
-  });
 
   const updated = participants.map(p => {
     const pFirst = (p['First Name'] || '').trim().toLowerCase();
@@ -53,7 +87,9 @@ app.post('/checkin', async (req, res) => {
     const reqLast = (lastName || '').trim().toLowerCase();
 
     if (pFirst === reqFirst && pLast === reqLast) {
-      console.log(`✅ Checked in: ${p['First Name']} ${p['Last Name']}`);
+      const status = checkedIn ? 'Checked In' : 'Checked Out';
+      const emoji = checkedIn ? '✅' : '❌';
+      console.log(`${emoji} ${status}: ${p['First Name']} ${p['Last Name']}`);
       return { ...p, checkin: checkedIn ? 'checked-in' : '' };
     }
     return p;
