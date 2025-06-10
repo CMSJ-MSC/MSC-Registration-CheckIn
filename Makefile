@@ -1,3 +1,6 @@
+start:
+	node server.js
+
 add:
 	git status
 	git add .
