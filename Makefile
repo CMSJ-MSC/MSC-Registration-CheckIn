@@ -3,5 +3,8 @@ add:
 	git add .
 	git status
 
-main:
+push:
 	git push origin main
+
+main:
+	git pull origin main
