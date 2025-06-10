@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MSC Check-In App</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -41,14 +43,46 @@
       border-color: rgb(239, 68, 68);
       box-shadow: 0 0 0 2px rgb(239, 68, 68);
     }
+    
+    /* Mobile-specific styles */
+    @media (max-width: 768px) {
+      .mobile-table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .mobile-table {
+        min-width: 800px;
+      }
+      
+      .mobile-button {
+        min-height: 44px; /* iOS recommended touch target size */
+        min-width: 44px;
+      }
+    }
+    
+    /* Card layout for mobile */
+    .mobile-card {
+      display: none;
+    }
+    
+    @media (max-width: 640px) {
+      .desktop-table {
+        display: none;
+      }
+      
+      .mobile-card {
+        display: block;
+      }
+    }
   </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
   <!-- Password Overlay -->
-  <div id="passwordOverlay" class="fixed inset-0 bg-gray-900 flex items-center justify-center z-50">
-    <div class="text-center text-white">
-      <h2 class="text-2xl font-bold mb-4">MSC Check-In App</h2>
-      <p>Please enter the password to continue...</p>
+  <div id="passwordOverlay" class="fixed inset-0 bg-gray-900 flex items-center justify-center z-50 p-4">
+    <div class="text-center text-white max-w-sm w-full">
+      <h2 class="text-xl sm:text-2xl font-bold mb-4">MSC Check-In App</h2>
+      <p class="text-sm sm:text-base">Please enter the password to continue...</p>
     </div>
   </div>
 
@@ -56,24 +90,24 @@
   <div id="mainContent" class="hidden">
     <!-- Header -->
     <header class="bg-gradient-to-r from-orange-600 to-orange-800 text-white shadow-lg">
-      <div class="container mx-auto px-6 py-6">
-        <h1 class="text-3xl font-bold text-center">MSC Participant Check-In</h1>
+      <div class="container mx-auto px-4 sm:px-6 py-4 sm:py-6">
+        <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-center">MSC Participant Check-In</h1>
       </div>
     </header>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-6 py-8">
+    <main class="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
       <!-- Search Section -->
-      <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-        <h2 class="text-xl font-semibold text-gray-800 mb-4">Search Participants</h2>
+      <div class="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6 sm:mb-8">
+        <h2 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Search Participants</h2>
         
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Family ID</label>
             <input 
               type="text" 
               id="searchFamilyID" 
-              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+              class="w-full px-3 py-3 text-base border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
               placeholder="Enter Family ID"
             />
           </div>
@@ -83,7 +117,7 @@
             <input 
               type="text" 
               id="searchFirstName" 
-              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+              class="w-full px-3 py-3 text-base border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
               placeholder="Enter First Name"
             />
           </div>
@@ -93,7 +127,7 @@
             <input 
               type="text" 
               id="searchLastName" 
-              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+              class="w-full px-3 py-3 text-base border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
               placeholder="Enter Last Name"
             />
           </div>
@@ -103,112 +137,100 @@
             <input 
               type="email" 
               id="searchEmail" 
-              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+              class="w-full px-3 py-3 text-base border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
               placeholder="Enter Email"
             />
           </div>
         </div>
         
-        <div class="flex flex-wrap gap-3">
+        <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-3">
           <button 
             onclick="loadData()" 
-            class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition-colors duration-200 flex items-center gap-2"
+            class="mobile-button bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-medium py-3 px-4 sm:px-6 rounded-md transition-colors duration-200 flex items-center justify-center gap-2 text-sm sm:text-base"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
-            Search
+            <span class="hidden sm:inline">Search</span>
           </button>
           
           <button 
             onclick="resetSearch()" 
-            class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-6 rounded-md transition-colors duration-200 flex items-center gap-2"
+            class="mobile-button bg-gray-500 hover:bg-gray-600 active:bg-gray-700 text-white font-medium py-3 px-4 sm:px-6 rounded-md transition-colors duration-200 flex items-center justify-center gap-2 text-sm sm:text-base"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
-            Clear
+            <span class="hidden sm:inline">Clear</span>
           </button>
           
-          <div class="relative inline-block text-left">
-              <button 
-                onclick="toggleDropdown()" 
-                class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded-md transition-colors duration-200 flex items-center gap-2"
-              >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                  </path>
-                </svg>
-                Download
-              </button>
-            
-              <div id="downloadDropdown" class="hidden absolute z-10 mt-2 w-48 bg-white rounded-md shadow-lg">
-                <a href="/download?format=csv" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Download CSV</a>
-                <a href="/download?format=xlsx" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Download XLSX</a>
-              </div>
+          <div class="relative inline-block text-left col-span-2 sm:col-span-1">
+            <button 
+              onclick="toggleDropdown()" 
+              class="mobile-button w-full sm:w-auto bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-medium py-3 px-4 sm:px-6 rounded-md transition-colors duration-200 flex items-center justify-center gap-2 text-sm sm:text-base"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                </path>
+              </svg>
+              Download
+            </button>
+          
+            <div id="downloadDropdown" class="hidden absolute z-10 mt-2 w-full sm:w-48 bg-white rounded-md shadow-lg border">
+              <a href="/download?format=csv" class="block px-4 py-3 text-gray-800 hover:bg-gray-100 active:bg-gray-200 text-sm sm:text-base">Download CSV</a>
+              <a href="/download?format=xlsx" class="block px-4 py-3 text-gray-800 hover:bg-gray-100 active:bg-gray-200 text-sm sm:text-base">Download XLSX</a>
             </div>
+          </div>
           
           <button 
             onclick="resetAllCheckins()"
-            class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-6 rounded-md transition-colors duration-200 flex items-center gap-2"
+            class="mobile-button col-span-2 sm:col-span-1 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-medium py-3 px-4 sm:px-6 rounded-md transition-colors duration-200 flex items-center justify-center gap-2 text-sm sm:text-base"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
             </svg>
-            Reset
+            Reset All
           </button>
-
-          <!-- <div class="relative inline-block text-left">
-            <button 
-              onclick="toggleFilterDropdown()" 
-              class="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-6 rounded-md transition-colors duration-200 flex items-center gap-2"
-            >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
-              </svg>
-              Filter
-            </button>
-            
-            <div id="filterDropdown" class="hidden absolute z-10 mt-2 w-48 bg-white rounded-md shadow-lg">
-              <a href="#" onclick="filterByStatus('all')" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Show All</a>
-              <a href="#" onclick="filterByStatus('checked-in')" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Show Checked In</a>
-              <a href="#" onclick="filterByStatus('not-checked-in')" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Show Not Checked In</a>
-            </div>
-          </div> -->
         </div>
       </div>
 
       <!-- Results Section -->
       <div id="resultsSection" class="bg-white rounded-lg shadow-md overflow-hidden hidden">
-        <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
-          <h3 class="text-lg font-semibold text-gray-800">Participant Results</h3>
+        <div class="px-4 sm:px-6 py-4 bg-gray-50 border-b border-gray-200">
+          <h3 class="text-base sm:text-lg font-semibold text-gray-800">Participant Results</h3>
         </div>
         
-        <div class="overflow-x-auto">
-          <table id="regTable" class="w-full">
+        <!-- Desktop Table View -->
+        <div class="desktop-table mobile-table-container">
+          <table id="regTable" class="w-full mobile-table">
             <thead class="bg-gray-100">
               <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Family ID</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">First Name</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Name</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact First Name</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact Last Name</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age Group</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PAID</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Decided</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Check In</th>
+                <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Family ID</th>
+                <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">First Name</th>
+                <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Name</th>
+                <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact First</th>
+                <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact Last</th>
+                <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age Group</th>
+                <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PAID</th>
+                <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Decided</th>
+                <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Check In</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200"></tbody>
           </table>
         </div>
         
+        <!-- Mobile Card View -->
+        <div id="mobileCards" class="mobile-card divide-y divide-gray-200">
+          <!-- Cards will be inserted here by JavaScript -->
+        </div>
+        
         <!-- Empty state -->
-        <div id="emptyState" class="hidden text-center py-12">
-          <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div id="emptyState" class="hidden text-center py-8 sm:py-12 px-4">
+          <svg class="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
           </svg>
           <h3 class="mt-2 text-sm font-medium text-gray-900">No participants found</h3>
