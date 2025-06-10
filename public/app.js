@@ -6,12 +6,22 @@ async function loadData() {
       const familyID = document.getElementById('searchFamilyID').value.trim().toLowerCase();
       const firstName = document.getElementById('searchFirstName').value.trim().toLowerCase();
       const lastName = document.getElementById('searchLastName').value.trim().toLowerCase();
+      const resultsSection = document.getElementById('resultsSection');
 
       // Add validation for first name and last name
       if ((firstName && !lastName) || (!firstName && lastName)) {
         alert('Please enter both First Name and Last Name to search by name.');
         return;
       }
+
+      // Hide results section if no search criteria
+      if (!familyID && !firstName && !lastName) {
+        resultsSection.classList.add('hidden');
+        return;
+      }
+
+      // Show results section when there are search criteria
+      resultsSection.classList.remove('hidden');
 
       const tbody = document.querySelector('#regTable tbody');
       const emptyState = document.getElementById('emptyState');
@@ -24,8 +34,7 @@ async function loadData() {
 
         return (
           (familyID && fID === familyID) ||
-          (firstName && lastName && fName === firstName && lName === lastName) ||
-          (!familyID && !firstName && !lastName)  // Show all if no search
+          (firstName && lastName && fName === firstName && lName === lastName)
         );
       });
 
