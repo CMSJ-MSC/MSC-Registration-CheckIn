@@ -86,8 +86,6 @@ async function loadData() {
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Contact Last Name'] || ''}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Email'] || ''}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Age Group'] || ''}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['PAID'] || ''}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Decided'] || ''}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
           <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${isCheckedIn ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
             ${isCheckedIn ? '✅ Checked In' : '❌ Not Checked In'}
@@ -110,8 +108,6 @@ async function loadData() {
         <p><strong>Contact:</strong> ${member['Contact First Name'] || ''} ${member['Contact Last Name'] || ''}</p>
         <p><strong>Email:</strong> ${member['Email'] || ''}</p>
         <p><strong>Age Group:</strong> ${member['Age Group'] || ''}</p>
-        <p><strong>PAID:</strong> ${member['PAID'] || ''}</p>
-        <p><strong>Decided:</strong> ${member['Decided'] || ''}</p>
         <p><strong>Status:</strong> <span class="${isCheckedIn ? 'text-green-600' : 'text-red-600'}">${isCheckedIn ? '✅ Checked In' : '❌ Not Checked In'}</span></p>
       `;
 

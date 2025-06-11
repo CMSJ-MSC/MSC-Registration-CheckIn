@@ -1,0 +1,41 @@
+input:invalid {
+  border-color: rgb(239, 68, 68);
+  box-shadow: 0 0 0 1px rgb(239, 68, 68);
+}
+
+input:invalid:focus {
+  border-color: rgb(239, 68, 68);
+  box-shadow: 0 0 0 2px rgb(239, 68, 68);
+}
+
+/* Mobile-specific styles */
+.mobile-table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  .mobile-table {
+    min-width: 800px;
+  }
+  
+  .mobile-button {
+    min-height: 44px; /* iOS recommended touch target size */
+    min-width: 44px;
+  }
+}
+
+/* Card layout for mobile */
+.mobile-card {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .desktop-table {
+    display: none;
+  }
+  
+  .mobile-card {
+    display: block;
+  }
+} 

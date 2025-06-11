@@ -12,7 +12,7 @@ const PORT = 3000;
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
-const CSV_PATH = path.join(__dirname, 'data/participants.csv');
+const CSV_PATH = path.join(__dirname, 'data/participants_cleaned.csv');
 
 // 🔄 Load CSV as array of objects
 function loadParticipants() {
@@ -125,7 +125,7 @@ app.get('/download', async (req, res) => {
         }
       });
     } else {
-      const filePath = path.join(__dirname, 'data/participants.csv');
+      const filePath = path.join(__dirname, 'data/participants_cleaned.csv');
       return res.download(filePath, 'MSC-Checkin.csv', err => {
         if (err) {
           console.error('CSV download error:', err);

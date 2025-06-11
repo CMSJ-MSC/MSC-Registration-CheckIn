@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MSC Check-In App</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
   <script>
     // Password protection
-    const APP_PASSWORD = "msc2025"; // Change this to your desired password
-    const DOWNLOAD_PASSWORD = "msc2025admin"; // Password for downloads
+    const APP_PASSWORD = "msc2025"; 
+    const DOWNLOAD_PASSWORD = "msc2025admin"; 
     
     function checkPassword() {
       const password = prompt("Please enter the password to access the MSC Check-In App:");
@@ -44,48 +45,6 @@
       }
     }
   </script>
-  <style>
-    input:invalid {
-      border-color: rgb(239, 68, 68);
-      box-shadow: 0 0 0 1px rgb(239, 68, 68);
-    }
-    input:invalid:focus {
-      border-color: rgb(239, 68, 68);
-      box-shadow: 0 0 0 2px rgb(239, 68, 68);
-    }
-    
-    /* Mobile-specific styles */
-    .mobile-table-container {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    
-    @media (max-width: 768px) {
-      .mobile-table {
-        min-width: 800px;
-      }
-      
-      .mobile-button {
-        min-height: 44px; /* iOS recommended touch target size */
-        min-width: 44px;
-      }
-    }
-    
-    /* Card layout for mobile */
-    .mobile-card {
-      display: none;
-    }
-    
-    @media (max-width: 640px) {
-      .desktop-table {
-        display: none;
-      }
-      
-      .mobile-card {
-        display: block;
-      }
-    }
-  </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
   <!-- Password Overlay -->
@@ -223,8 +182,8 @@
                 <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact Last</th>
                 <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                 <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age Group</th>
-                <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PAID</th>
-                <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Decided</th>
+                <!-- <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PAID</th> -->
+                <!-- <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Decided</th> -->
                 <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                 <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">Check In</th>
               </tr>
