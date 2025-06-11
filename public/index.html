@@ -8,6 +8,7 @@
   <script>
     // Password protection
     const APP_PASSWORD = "msc2025"; // Change this to your desired password
+    const DOWNLOAD_PASSWORD = "msc2025admin"; // Password for downloads
     
     function checkPassword() {
       const password = prompt("Please enter the password to access the MSC Check-In App:");
@@ -17,6 +18,15 @@
       } else {
         alert("Incorrect password. Please try again.");
         checkPassword();
+      }
+    }
+
+    function checkDownloadPassword(format) {
+      const password = prompt("Please enter the password to download the data:");
+      if (password === DOWNLOAD_PASSWORD) {
+        window.location.href = `/download?format=${format}`;
+      } else {
+        alert("Incorrect password. Download cancelled.");
       }
     }
 
@@ -178,8 +188,8 @@
             </button>
           
             <div id="downloadDropdown" class="hidden absolute z-10 mt-2 w-full sm:w-48 bg-white rounded-md shadow-lg border">
-              <a href="/download?format=csv" class="block px-4 py-3 text-gray-800 hover:bg-gray-100 active:bg-gray-200 text-sm sm:text-base">Download CSV</a>
-              <a href="/download?format=xlsx" class="block px-4 py-3 text-gray-800 hover:bg-gray-100 active:bg-gray-200 text-sm sm:text-base">Download XLSX</a>
+              <a href="javascript:void(0)" onclick="checkDownloadPassword('csv')" class="block px-4 py-3 text-gray-800 hover:bg-gray-100 active:bg-gray-200 text-sm sm:text-base">Download CSV</a>
+              <a href="javascript:void(0)" onclick="checkDownloadPassword('xlsx')" class="block px-4 py-3 text-gray-800 hover:bg-gray-100 active:bg-gray-200 text-sm sm:text-base">Download XLSX</a>
             </div>
           </div>
           
