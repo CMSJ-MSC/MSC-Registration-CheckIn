@@ -28,17 +28,41 @@ async function loadData() {
     tbody.innerHTML = '';
     mobileCards.innerHTML = '';
 
+    // First, find all unique contact emails that match the search criteria
+    let matchingContactEmails = new Set();
+    
+    // If searching by email, use that directly
+    if (email) {
+      matchingContactEmails.add(email);
+    }
+    
+    // If searching by name, find the contact email associated with that name
+    if (firstName && lastName) {
+      data.forEach(member => {
+        const fName = (member['First Name'] || '').toLowerCase();
+        const lName = (member['Last Name'] || '').toLowerCase();
+        if (fName === firstName && lName === lastName) {
+          matchingContactEmails.add(member['Email'].toLowerCase());
+        }
+      });
+    }
+
+    // Filter participants based on family ID or matching contact emails
     const filtered = data.filter(member => {
       const fID = (member['Family ID'] || '').toLowerCase();
-      const fName = (member['First Name'] || '').toLowerCase();
-      const lName = (member['Last Name'] || '').toLowerCase();
       const memberEmail = (member['Email'] || '').toLowerCase();
 
-      return (
-        (familyID && fID === familyID) ||
-        (firstName && lastName && fName === firstName && lName === lastName) ||
-        (email && memberEmail === email)
-      );
+      // If searching by family ID, match that
+      if (familyID && fID === familyID) {
+        return true;
+      }
+
+      // If we have matching contact emails, check if this member's email matches any of them
+      if (matchingContactEmails.size > 0) {
+        return matchingContactEmails.has(memberEmail);
+      }
+
+      return false;
     });
 
     if (filtered.length === 0) {
@@ -47,6 +71,9 @@ async function loadData() {
     } else {
       emptyState.classList.add('hidden');
     }
+
+    // Sort filtered results by Family ID to group family members together
+    filtered.sort((a, b) => (a['Family ID'] || '').localeCompare(b['Family ID'] || ''));
 
     filtered.forEach((member, index) => {
       const isCheckedIn = member.checkin === 'checked-in';
