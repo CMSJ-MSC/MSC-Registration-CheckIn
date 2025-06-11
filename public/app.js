@@ -112,7 +112,11 @@ async function loadData() {
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Contact First Name'] || ''}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Contact Last Name'] || ''}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Email'] || ''}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Age Group'] || ''}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getAgeGroupColor(member['Age Group'])}">
+            ${member['Age Group'] || ''}
+          </span>
+        </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
           <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${isCheckedIn ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
             ${isCheckedIn ? '✅ Checked In' : '❌ Not Checked In'}
@@ -134,7 +138,7 @@ async function loadData() {
         <p><strong>Name:</strong> ${member['First Name'] || ''} ${member['Last Name'] || ''}</p>
         <p><strong>Contact:</strong> ${member['Contact First Name'] || ''} ${member['Contact Last Name'] || ''}</p>
         <p><strong>Email:</strong> ${member['Email'] || ''}</p>
-        <p><strong>Age Group:</strong> ${member['Age Group'] || ''}</p>
+        <p><strong>Age Group:</strong> <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getAgeGroupColor(member['Age Group'])}">${member['Age Group'] || ''}</span></p>
         <p><strong>Status:</strong> <span class="${isCheckedIn ? 'text-green-600' : 'text-red-600'}">${isCheckedIn ? '✅ Checked In' : '❌ Not Checked In'}</span></p>
       `;
 
@@ -263,6 +267,23 @@ function filterByStatus(status) {
     }
   }
   document.getElementById('filterDropdown').classList.add('hidden');
+}
+
+function getAgeGroupColor(ageGroup) {
+  switch(ageGroup) {
+    case 'Adult':
+      return 'bg-green-100 text-green-800';
+    case 'Child':
+      return 'bg-blue-100 text-blue-800';
+    case 'CHYK Working':
+      return 'bg-yellow-100 text-yellow-800';
+    case 'CHYK Non-working':
+      return 'bg-orange-100 text-orange-800';
+    case 'Infant/ShishuVihar':
+      return 'bg-pink-100 text-pink-800';
+    default:
+      return 'bg-gray-100 text-gray-800';
+  }
 }
 
 loadData(); // Initial load
