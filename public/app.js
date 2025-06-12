@@ -179,6 +179,12 @@ async function loadData() {
 }
 
 async function resetAllCheckins() {
+  const password = prompt("Please enter the admin password to reset all check-ins:");
+  if (password !== DOWNLOAD_PASSWORD) {
+    alert("Incorrect password. Reset cancelled.");
+    return;
+  }
+
   if (!confirm('Are you sure you want to clear all check-ins? This cannot be undone.')) return;
 
   try {
