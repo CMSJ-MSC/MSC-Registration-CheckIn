@@ -1,3 +1,4 @@
+/* Form validation styles*/
 input:invalid {
   border-color: rgb(239, 68, 68);
   box-shadow: 0 0 0 1px rgb(239, 68, 68);
