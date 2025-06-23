@@ -1,3 +1,37 @@
+function checkPassword() {
+  const password = prompt("Please enter the password to access the MSC Check-In App:");
+  if (password === APP_PASSWORD) {
+    document.getElementById('mainContent').classList.remove('hidden');
+    document.getElementById('passwordOverlay').classList.add('hidden');
+  } else {
+    alert("Incorrect password. Please try again.");
+    checkPassword();
+  }
+}
+
+function checkDownloadPassword(format) {
+  const password = prompt("Please enter the password to download the data:");
+  if (password === DOWNLOAD_PASSWORD) {
+    window.location.href = `/download?format=${format}`;
+  } else {
+    alert("Incorrect password. Download cancelled.");
+  }
+}
+
+// Run password check when page loads
+window.onload = checkPassword;
+
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#3b82f6',
+        secondary: '#1e40af',
+      }
+    }
+  }
+}
+
 async function loadData() {
   try {
     const res = await fetch('/participants');
@@ -46,6 +80,8 @@ async function loadData() {
         }
       });
     }
+
+    
 
     // Filter participants based on family ID or matching contact emails
     const filtered = data.filter(member => {
@@ -177,6 +213,9 @@ async function loadData() {
     console.error('Failed to load data:', error);
   }
 }
+
+const APP_PASSWORD = "msc2025"; 
+const DOWNLOAD_PASSWORD = "msc2025admin "; 
 
 async function resetAllCheckins() {
   const password = prompt("Please enter the admin password to reset all check-ins:");
