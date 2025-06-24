@@ -1,3 +1,7 @@
+check:
+	git status
+	git branch
+
 start:
 	node server.js
 
