@@ -179,16 +179,27 @@ async function loadData() {
       
       // Apply background color based on gender for mobile cards
       if (gender === 'M') {
-        card.className = 'p-4 sm:p-6 bg-blue-50';
+        card.className = 'p-4 sm:p-6 bg-blue-50 border-b border-gray-200';
+        card.style.backgroundColor = '#eff6ff'; // Fallback blue color
+        card.style.borderLeft = '4px solid #3b82f6'; // Blue left border
+        console.log('Mobile card created for Male:', member['First Name'], member['Last Name']);
       } else if (gender === 'F') {
-        card.className = 'p-4 sm:p-6 bg-pink-50';
+        card.className = 'p-4 sm:p-6 bg-pink-50 border-b border-gray-200';
+        card.style.backgroundColor = '#fdf2f8'; // Fallback pink color
+        card.style.borderLeft = '4px solid #ec4899'; // Pink left border
+        console.log('Mobile card created for Female:', member['First Name'], member['Last Name']);
       } else {
-        card.className = 'p-4 sm:p-6 bg-white';
+        card.className = 'p-4 sm:p-6 bg-white border-b border-gray-200';
+        card.style.borderLeft = '4px solid #d1d5db'; // Gray left border
+        console.log('Mobile card created for Unknown gender:', member['First Name'], member['Last Name'], 'Gender:', gender);
       }
+
+      // Add gender indicator for debugging
+      const genderIndicator = gender ? ` (${gender})` : '';
 
       const info = `
         <p><strong>Family ID:</strong> ${member['Family ID'] || ''}</p>
-        <p><strong>Name:</strong> ${member['First Name'] || ''} ${member['Last Name'] || ''}</p>
+        <p><strong>Name:</strong> ${member['First Name'] || ''} ${member['Last Name'] || ''}${genderIndicator}</p>
         <p><strong>Contact:</strong> ${member['Contact First Name'] || ''} ${member['Contact Last Name'] || ''}</p>
         <p><strong>Email:</strong> ${member['Email'] || ''}</p>
         <p><strong>Age Group:</strong> <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getAgeGroupColor(member['Age Group'])}">${member['Age Group'] || ''}</span></p>

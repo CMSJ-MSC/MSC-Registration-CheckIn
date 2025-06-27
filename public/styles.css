@@ -9,6 +9,25 @@ input:invalid:focus {
   box-shadow: 0 0 0 2px rgb(239, 68, 68);
 }
 
+/* Gender-based background colors for mobile cards */
+.mobile-card .bg-blue-50 {
+  background-color: #eff6ff !important;
+}
+
+.mobile-card .bg-pink-50 {
+  background-color: #fdf2f8 !important;
+}
+
+/* Ensure left borders work on mobile cards */
+.mobile-card > div {
+  border-left-width: 4px !important;
+  border-left-style: solid !important;
+}
+
+.mobile-card > div[style*="borderLeft"] {
+  border-left: inherit !important;
+}
+
 /* Mobile-specific styles */
 .mobile-table-container {
   overflow-x: auto;
