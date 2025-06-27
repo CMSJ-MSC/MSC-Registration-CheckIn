@@ -12,7 +12,7 @@ const PORT = 3000;
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
-const CSV_PATH = path.join(__dirname, 'data/participants_cleaned.csv');
+const CSV_PATH = path.join(__dirname, 'data/participants2_cleaned.csv');
 
 // 🔄 Load CSV as array of objects
 function loadParticipants() {
@@ -30,6 +30,7 @@ function loadParticipants() {
           'Contact Last Name': data['ContactName.last'] || '',
           'Email': data['Email'] || '',
           'Age Group': data['Age Group'] || '',
+          'Gender': data['Participants.gender'] || '',
           'PAID': data['PAID'] || '',
           'Decided': data['Decided'] || '',
           'checkin': data['checkin'] || '' // Preserve check-in status if it exists
@@ -51,6 +52,7 @@ async function saveParticipants(participants) {
       { id: 'Email', title: 'Email' },
       { id: 'Participants.name.last', title: 'Participants.name.last' },
       { id: 'Participants.name.first', title: 'Participants.name.first' },
+      { id: 'Participants.gender', title: 'Participants.gender' },
       { id: 'Age Group', title: 'Age Group' },
       { id: 'PAID', title: 'PAID' },
       { id: 'Decided', title: 'Decided' },
@@ -66,6 +68,7 @@ async function saveParticipants(participants) {
     'Email': p['Email'],
     'Participants.name.last': p['Last Name'],
     'Participants.name.first': p['First Name'],
+    'Participants.gender': p['Gender'],
     'Age Group': p['Age Group'],
     'PAID': p['PAID'],
     'Decided': p['Decided'],
@@ -125,7 +128,7 @@ app.get('/download', async (req, res) => {
         }
       });
     } else {
-      const filePath = path.join(__dirname, 'data/participants_cleaned.csv');
+      const filePath = path.join(__dirname, 'data/participants2_cleaned.csv');
       return res.download(filePath, 'MSC-Checkin.csv', err => {
         if (err) {
           console.error('CSV download error:', err);

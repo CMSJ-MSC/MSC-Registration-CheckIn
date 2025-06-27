@@ -113,10 +113,19 @@ async function loadData() {
 
     filtered.forEach((member, index) => {
       const isCheckedIn = member.checkin === 'checked-in';
+      const gender = member['Gender'] || '';
 
       // 🌐 Desktop table row
       const tr = document.createElement('tr');
-      tr.className = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+      
+      // Apply background color based on gender
+      if (gender === 'M') {
+        tr.className = 'bg-blue-50 hover:bg-blue-100';
+      } else if (gender === 'F') {
+        tr.className = 'bg-pink-50 hover:bg-pink-100';
+      } else {
+        tr.className = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+      }
 
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
@@ -167,7 +176,15 @@ async function loadData() {
 
       // 📱 Mobile card view
       const card = document.createElement('div');
-      card.className = 'p-4 sm:p-6 bg-white';
+      
+      // Apply background color based on gender for mobile cards
+      if (gender === 'M') {
+        card.className = 'p-4 sm:p-6 bg-blue-50';
+      } else if (gender === 'F') {
+        card.className = 'p-4 sm:p-6 bg-pink-50';
+      } else {
+        card.className = 'p-4 sm:p-6 bg-white';
+      }
 
       const info = `
         <p><strong>Family ID:</strong> ${member['Family ID'] || ''}</p>
