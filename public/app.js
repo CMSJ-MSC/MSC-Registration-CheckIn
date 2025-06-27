@@ -81,17 +81,19 @@ async function loadData() {
       });
     }
 
-    
+    // If searching by family ID, find all emails associated with that family ID
+    if (familyID) {
+      data.forEach(member => {
+        const fID = (member['Family ID'] || '').toLowerCase();
+        if (fID === familyID) {
+          matchingContactEmails.add(member['Email'].toLowerCase());
+        }
+      });
+    }
 
-    // Filter participants based on family ID or matching contact emails
+    // Filter participants based on matching contact emails
     const filtered = data.filter(member => {
-      const fID = (member['Family ID'] || '').toLowerCase();
       const memberEmail = (member['Email'] || '').toLowerCase();
-
-      // If searching by family ID, match that
-      if (familyID && fID === familyID) {
-        return true;
-      }
 
       // If we have matching contact emails, check if this member's email matches any of them
       if (matchingContactEmails.size > 0) {
