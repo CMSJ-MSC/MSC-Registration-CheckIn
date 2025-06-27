@@ -239,6 +239,16 @@ async function loadData() {
     if (currentFilter !== 'all') {
       filterByStatus(currentFilter);
     }
+
+    // Auto-scroll to results section on mobile only
+    if (window.innerWidth < 768) { // Mobile breakpoint (sm:768px)
+      if (resultsSection && !resultsSection.classList.contains('hidden')) {
+        resultsSection.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start' 
+        });
+      }
+    }
   } catch (error) {
     console.error('Failed to load data:', error);
   }
