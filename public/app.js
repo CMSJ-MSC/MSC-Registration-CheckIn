@@ -350,10 +350,8 @@ function getAgeGroupColor(ageGroup) {
       return 'bg-green-100 text-green-800';
     case 'Child':
       return 'bg-blue-100 text-blue-800';
-    case 'CHYK Working':
+    case 'CHYK':
       return 'bg-yellow-100 text-yellow-800';
-    case 'CHYK Non-working':
-      return 'bg-orange-100 text-orange-800';
     case 'Infant/ShishuVihar':
       return 'bg-pink-100 text-pink-800';
     default:
