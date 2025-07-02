@@ -154,14 +154,19 @@ async function loadData() {
 
       tr.innerHTML = `
         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${member['Family ID'] || ''}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['First Name'] || ''}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Last Name'] || ''}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Email'] || ''}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Contact First Name'] || ''}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Contact Last Name'] || ''}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Email'] || ''}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['First Name'] || ''}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Last Name'] || ''}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
           <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getAgeGroupColor(member['Age Group'])}">
             ${member['Age Group'] || ''}
+          </span>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${gender === 'M' ? 'bg-blue-100 text-blue-800 border border-[0.5px] border-blue-800' : gender === 'F' ? 'bg-pink-100 text-pink-800 border border-[0.5px] border-pink-800' : 'bg-gray-100 text-gray-800 border border-[0.5px] border-gray-800'}">
+            ${gender || 'N/A'}
           </span>
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -201,10 +206,11 @@ async function loadData() {
 
       const info = `
         <p><strong>Family ID:</strong> ${member['Family ID'] || ''}</p>
-        <p><strong>Name:</strong> ${member['First Name'] || ''} ${member['Last Name'] || ''}${genderIndicator}</p>
-        <p><strong>Contact:</strong> ${member['Contact First Name'] || ''} ${member['Contact Last Name'] || ''}</p>
         <p><strong>Email:</strong> ${member['Email'] || ''}</p>
+        <p><strong>Contact:</strong> ${member['Contact First Name'] || ''} ${member['Contact Last Name'] || ''}</p>
+        <p><strong>Name:</strong> ${member['First Name'] || ''} ${member['Last Name'] || ''}</p>
         <p><strong>Age Group:</strong> <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getAgeGroupColor(member['Age Group'])}">${member['Age Group'] || ''}</span></p>
+        <p><strong>Gender:</strong> ${gender || 'N/A'}</p>
         <p><strong>Status:</strong> <span class="${isCheckedIn ? 'text-green-600' : 'text-red-600'}">${isCheckedIn ? '✅ Checked In' : '❌ Not Checked In'}</span></p>
       `;
 
@@ -341,7 +347,7 @@ function filterByStatus(status) {
   const tbody = document.querySelector('#regTable tbody');
   const rows = tbody.getElementsByTagName('tr');
   for (let row of rows) {
-    const statusCell = row.querySelector('td:nth-child(5)');
+    const statusCell = row.querySelector('td:nth-child(9)');
     const isCheckedIn = statusCell?.textContent.includes('Checked In');
     if (status === 'all' || 
         (status === 'checked-in' && isCheckedIn) || 
