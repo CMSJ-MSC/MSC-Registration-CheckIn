@@ -161,7 +161,7 @@ async function loadData() {
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Last Name'] || ''}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
           <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getGradeAgeCategoryColor(member['Grade/Age Category'])}">
-            ${member['Grade/Age Category'] || ''}
+            ${formatGradeAgeCategory(member['Grade/Age Category'] || '')}
           </span>
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -209,7 +209,7 @@ async function loadData() {
         <p><strong>Email:</strong> ${member['Email'] || ''}</p>
         <p><strong>Contact:</strong> ${member['Contact First Name'] || ''} ${member['Contact Last Name'] || ''}</p>
         <p><strong>Name:</strong> ${member['First Name'] || ''} ${member['Last Name'] || ''}</p>
-        <p><strong>Grade/Age Category:</strong> <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getGradeAgeCategoryColor(member['Grade/Age Category'])}">${member['Grade/Age Category'] || ''}</span></p>
+        <p><strong>Grade/Age Category:</strong> <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getGradeAgeCategoryColor(member['Grade/Age Category'])}">${formatGradeAgeCategory(member['Grade/Age Category'] || '')}</span></p>
         <p><strong>Gender:</strong> ${gender || 'N/A'}</p>
         <p><strong>Status:</strong> <span class="${isCheckedIn ? 'text-green-600' : 'text-red-600'}">${isCheckedIn ? '✅ Checked In' : '❌ Not Checked In'}</span></p>
       `;
@@ -364,15 +364,26 @@ function getGradeAgeCategoryColor(gradeAgeCategory) {
   switch(gradeAgeCategory) {
     case 'Adult':
       return 'bg-yellow-100 text-yellow-800';
-    case 'Child':
-      return 'bg-blue-100 text-blue-800';
     case 'JCHYK':
       return 'bg-green-100 text-green-800';
     case 'Infant/ShishuVihar':
       return 'bg-pink-100 text-pink-800';
     default:
-      return 'bg-blue-100 text-blue-800';
+      return 'bg-purple-100 text-purple-800';
   }
+}
+
+function formatGradeAgeCategory(value) {
+  // Normalize value for comparison
+  const normalized = (value || '').toString().trim().toLowerCase();
+  if (/^\d+$/.test(normalized)) {
+    return `Grade: ${value}`;
+  }
+  if (normalized === 'kg' || normalized === 'pre-kg' || normalized === 'prek' || normalized === 'prekg') {
+    // Accept common variations for KG and Pre-KG
+    return `Grade: ${value}`;
+  }
+  return value;
 }
 
 loadData(); // Initial load
