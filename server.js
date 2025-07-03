@@ -29,7 +29,7 @@ function loadParticipants() {
           'Contact First Name': data['ContactName.first'] || '',
           'Contact Last Name': data['ContactName.last'] || '',
           'Email': data['Email'] || '',
-          'Grade/Age Category': data['Grade/Age Category'] || '',
+          'Category': data['Category'] || '',
           'Gender': data['Participants.gender'] || '',
           'PAID': data['PAID'] || '',
           'Decided': data['Decided'] || '',
@@ -53,7 +53,7 @@ async function saveParticipants(participants) {
       { id: 'Participants.name.last', title: 'Participants.name.last' },
       { id: 'Participants.name.first', title: 'Participants.name.first' },
       { id: 'Participants.gender', title: 'Participants.gender' },
-      { id: 'Grade/Age Category', title: 'Grade/Age Category' },
+      { id: 'Category', title: 'Category' },
       { id: 'PAID', title: 'PAID' },
       { id: 'Decided', title: 'Decided' },
       { id: 'checkin', title: 'checkin' }
@@ -69,7 +69,7 @@ async function saveParticipants(participants) {
     'Participants.name.last': p['Last Name'],
     'Participants.name.first': p['First Name'],
     'Participants.gender': p['Gender'],
-    'Grade/Age Category': p['Grade/Age Category'],
+    'Category': p['Category'],
     'PAID': p['PAID'],
     'Decided': p['Decided'],
     'checkin': p['checkin']

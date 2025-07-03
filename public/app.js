@@ -64,12 +64,12 @@ async function loadData() {
 
     // First, find all unique contact emails that match the search criteria
     let matchingContactEmails = new Set();
-    
+
     // If searching by email, use that directly
     if (email) {
       matchingContactEmails.add(email);
     }
-    
+
     // If searching by name, find the contact email associated with that name
     if (firstName && lastName) {
       data.forEach(member => {
@@ -119,7 +119,7 @@ async function loadData() {
 
       // 🌐 Desktop table row
       const tr = document.createElement('tr');
-      
+
       // Apply background color based on gender
       if (gender === 'M') {
         tr.className = 'bg-blue-50 hover:bg-blue-100';
@@ -155,17 +155,15 @@ async function loadData() {
       tr.innerHTML = `
         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${member['Family ID'] || ''}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Email'] || ''}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Contact First Name'] || ''}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Contact Last Name'] || ''}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['First Name'] || ''}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${member['Last Name'] || ''}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${(member['Contact First Name'] || '')} ${(member['Contact Last Name'] || '')}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${(member['First Name'] || '')} ${(member['Last Name'] || '')}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getGradeAgeCategoryColor(member['Grade/Age Category'])}">
-            ${formatGradeAgeCategory(member['Grade/Age Category'] || '')}
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getGradeAgeCategoryColor(member['Category'])}">
+    ${formatGradeAgeCategory(member['Category'] || '')}
           </span>
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${gender === 'M' ? 'bg-blue-100 text-blue-800 border border-[0.5px] border-blue-800' : gender === 'F' ? 'bg-pink-100 text-pink-800 border border-[0.5px] border-pink-800' : 'bg-gray-100 text-gray-800 border border-[0.5px] border-gray-800'}">
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${gender === 'M' ? 'bg-blue-100 text-blue-800 border border-[0.5px] border-blue-100' : gender === 'F' ? 'bg-pink-100 text-pink-800 border border-[0.5px] border-pink-100' : 'bg-gray-100 text-gray-800 border border-[0.5px] border-gray-800'}">
             ${gender || 'N/A'}
           </span>
         </td>
@@ -183,7 +181,7 @@ async function loadData() {
 
       // 📱 Mobile card view
       const card = document.createElement('div');
-      
+
       // Apply background color based on gender for mobile cards
       if (gender === 'M') {
         card.className = 'p-4 sm:p-6 bg-blue-50 border-b border-gray-200';
@@ -209,7 +207,7 @@ async function loadData() {
         <p><strong>Email:</strong> ${member['Email'] || ''}</p>
         <p><strong>Contact:</strong> ${member['Contact First Name'] || ''} ${member['Contact Last Name'] || ''}</p>
         <p><strong>Name:</strong> ${member['First Name'] || ''} ${member['Last Name'] || ''}</p>
-        <p><strong>Grade/Age Category:</strong> <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getGradeAgeCategoryColor(member['Grade/Age Category'])}">${formatGradeAgeCategory(member['Grade/Age Category'] || '')}</span></p>
+        <p><strong>Category:</strong> <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getGradeAgeCategoryColor(member['Category'])}">${formatGradeAgeCategory(member['Category'] || '')}</span></p>
         <p><strong>Gender:</strong> ${gender || 'N/A'}</p>
         <p><strong>Status:</strong> <span class="${isCheckedIn ? 'text-green-600' : 'text-red-600'}">${isCheckedIn ? '✅ Checked In' : '❌ Not Checked In'}</span></p>
       `;
@@ -249,9 +247,9 @@ async function loadData() {
     // Auto-scroll to results section on mobile only
     if (window.innerWidth < 768) { // Mobile breakpoint (sm:768px)
       if (resultsSection && !resultsSection.classList.contains('hidden')) {
-        resultsSection.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'start' 
+        resultsSection.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
         });
       }
     }
@@ -261,7 +259,7 @@ async function loadData() {
 }
 
 const APP_PASSWORD = "msc2025" || "Msc2025";
-const DOWNLOAD_PASSWORD = "msc2025admin "; 
+const DOWNLOAD_PASSWORD = "msc2025admin ";
 
 async function resetAllCheckins() {
   const password = prompt("Please enter the admin password to reset all check-ins:");
@@ -309,7 +307,7 @@ function toggleDropdown() {
   dropdown.classList.toggle('hidden');
 }
 
-document.addEventListener('click', function(event) {
+document.addEventListener('click', function (event) {
   const dropdown = document.getElementById('downloadDropdown');
   const button = event.target.closest('[onclick="toggleDropdown()"]');
   if (!button && !dropdown.contains(event.target)) {
@@ -317,7 +315,7 @@ document.addEventListener('click', function(event) {
   }
 });
 
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
   if (e.key === 'Enter' && (e.target.id.includes('search'))) {
     loadData();
   }
@@ -349,9 +347,9 @@ function filterByStatus(status) {
   for (let row of rows) {
     const statusCell = row.querySelector('td:nth-child(9)');
     const isCheckedIn = statusCell?.textContent.includes('Checked In');
-    if (status === 'all' || 
-        (status === 'checked-in' && isCheckedIn) || 
-        (status === 'not-checked-in' && !isCheckedIn)) {
+    if (status === 'all' ||
+      (status === 'checked-in' && isCheckedIn) ||
+      (status === 'not-checked-in' && !isCheckedIn)) {
       row.style.display = '';
     } else {
       row.style.display = 'none';
@@ -361,7 +359,7 @@ function filterByStatus(status) {
 }
 
 function getGradeAgeCategoryColor(gradeAgeCategory) {
-  switch(gradeAgeCategory) {
+  switch (gradeAgeCategory) {
     case 'Adult':
       return 'bg-yellow-100 text-yellow-800';
     case 'JCHYK':

@@ -1,4 +1,4 @@
-Family ID,ContactName.last,ContactName.first,Email,Participants.name.last,Participants.name.first,Participants.gender,Grade/Age Category,PAID,Decided,checkin
+Family ID,ContactName.last,ContactName.first,Email,Participants.name.last,Participants.name.first,Participants.gender,Category,PAID,Decided,checkin
 32,Rangaswamy,Sudharsan,yeomanly@gmail.com,Rangaswamy,Sudharsan,M,Adult,PAID,decided,
 32,Rangaswamy,Sudharsan,yeomanly@gmail.com,Sudharsan,Usha,F,Adult,PAID,decided,
 32,Rangaswamy,Sudharsan,yeomanly@gmail.com,Sudharsan,Riti,F,8,PAID,decided,
