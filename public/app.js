@@ -1,3 +1,8 @@
+// Global variables for autocomplete
+let allParticipants = [];
+let firstNameDropdown = null;
+let lastNameDropdown = null;
+
 function checkPassword() {
   const password = prompt("Please enter the password to access the MSC Check-In App:");
   if (password === APP_PASSWORD) {
@@ -19,7 +24,30 @@ function checkDownloadPassword(format) {
 }
 
 // Run password check when page loads
-window.onload = checkPassword;
+window.onload = function() {
+  checkPassword();
+  
+  // Initialize autocomplete dropdowns
+  firstNameDropdown = document.getElementById('firstNameDropdown');
+  lastNameDropdown = document.getElementById('lastNameDropdown');
+  
+  // Add event listeners for autocomplete
+  const firstNameInput = document.getElementById('searchFirstName');
+  const lastNameInput = document.getElementById('searchLastName');
+  
+  firstNameInput.addEventListener('input', () => showFirstNameAutocomplete());
+  lastNameInput.addEventListener('input', () => showLastNameAutocomplete());
+  
+  // Hide dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.relative')) {
+      hideAllDropdowns();
+    }
+  });
+  
+  // Load initial data for autocomplete
+  loadParticipantsForAutocomplete();
+};
 
 tailwind.config = {
   theme: {
@@ -36,6 +64,9 @@ async function loadData() {
   try {
     const res = await fetch('/participants');
     const data = await res.json();
+    
+    // Update global participants data for autocomplete
+    allParticipants = data;
 
     const familyID = document.getElementById('searchFamilyID').value.trim().toLowerCase();
     const firstName = document.getElementById('searchFirstName').value.trim().toLowerCase();
@@ -382,6 +413,89 @@ function formatGradeAgeCategory(value) {
     return `Grade: ${value}`;
   }
   return value;
+}
+
+// Autocomplete functions
+async function loadParticipantsForAutocomplete() {
+  try {
+    const res = await fetch('/participants');
+    allParticipants = await res.json();
+  } catch (error) {
+    console.error('Failed to load participants for autocomplete:', error);
+  }
+}
+
+function showFirstNameAutocomplete() {
+  const input = document.getElementById('searchFirstName');
+  const query = input.value.trim().toLowerCase();
+  
+  if (query.length < 2) {
+    firstNameDropdown.classList.add('hidden');
+    return;
+  }
+  
+  // Get unique first names that match the query
+  const matchingNames = [...new Set(
+    allParticipants
+      .filter(p => p['First Name'] && p['First Name'].toLowerCase().includes(query))
+      .map(p => p['First Name'])
+      .sort()
+  )].slice(0, 10); // Limit to 10 results
+  
+  if (matchingNames.length === 0) {
+    firstNameDropdown.classList.add('hidden');
+    return;
+  }
+  
+  firstNameDropdown.innerHTML = matchingNames
+    .map(name => `<div class="px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm" onclick="selectFirstName('${name}')">${name}</div>`)
+    .join('');
+  
+  firstNameDropdown.classList.remove('hidden');
+}
+
+function showLastNameAutocomplete() {
+  const input = document.getElementById('searchLastName');
+  const query = input.value.trim().toLowerCase();
+  
+  if (query.length < 2) {
+    lastNameDropdown.classList.add('hidden');
+    return;
+  }
+  
+  // Get unique last names that match the query
+  const matchingNames = [...new Set(
+    allParticipants
+      .filter(p => p['Last Name'] && p['Last Name'].toLowerCase().includes(query))
+      .map(p => p['Last Name'])
+      .sort()
+  )].slice(0, 10); // Limit to 10 results
+  
+  if (matchingNames.length === 0) {
+    lastNameDropdown.classList.add('hidden');
+    return;
+  }
+  
+  lastNameDropdown.innerHTML = matchingNames
+    .map(name => `<div class="px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm" onclick="selectLastName('${name}')">${name}</div>`)
+    .join('');
+  
+  lastNameDropdown.classList.remove('hidden');
+}
+
+function selectFirstName(name) {
+  document.getElementById('searchFirstName').value = name;
+  firstNameDropdown.classList.add('hidden');
+}
+
+function selectLastName(name) {
+  document.getElementById('searchLastName').value = name;
+  lastNameDropdown.classList.add('hidden');
+}
+
+function hideAllDropdowns() {
+  firstNameDropdown.classList.add('hidden');
+  lastNameDropdown.classList.add('hidden');
 }
 
 loadData(); // Initial load
