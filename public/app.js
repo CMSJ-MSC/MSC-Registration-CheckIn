@@ -38,6 +38,15 @@ window.onload = function() {
   firstNameInput.addEventListener('input', () => showFirstNameAutocomplete());
   lastNameInput.addEventListener('input', () => showLastNameAutocomplete());
   
+  // Clear last name when first name changes to maintain dependent relationship
+  firstNameInput.addEventListener('input', () => {
+    const lastNameInput = document.getElementById('searchLastName');
+    if (lastNameInput.value) {
+      lastNameInput.value = '';
+      hideAllDropdowns();
+    }
+  });
+  
   // Hide dropdowns when clicking outside
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.relative')) {
@@ -104,9 +113,15 @@ async function loadData() {
     // If searching by name, find the contact email associated with that name
     if (firstName && lastName) {
       data.forEach(member => {
-        const fName = (member['First Name'] || '').toLowerCase();
-        const lName = (member['Last Name'] || '').toLowerCase();
-        if (fName === firstName && lName === lastName) {
+        // Check participant names
+        const pFName = (member['First Name'] || '').toLowerCase();
+        const pLName = (member['Last Name'] || '').toLowerCase();
+        // Check contact names
+        const cFName = (member['Contact First Name'] || '').toLowerCase();
+        const cLName = (member['Contact Last Name'] || '').toLowerCase();
+        
+        if ((pFName === firstName && pLName === lastName) || 
+            (cFName === firstName && cLName === lastName)) {
           matchingContactEmails.add(member['Email'].toLowerCase());
         }
       });
@@ -434,13 +449,17 @@ function showFirstNameAutocomplete() {
     return;
   }
   
-  // Get unique first names that match the query
-  const matchingNames = [...new Set(
-    allParticipants
+  // Get unique first names (both contact and participant) that match the query
+  const matchingNames = [...new Set([
+    // Contact first names
+    ...allParticipants
+      .filter(p => p['Contact First Name'] && p['Contact First Name'].toLowerCase().includes(query))
+      .map(p => p['Contact First Name']),
+    // Participant first names
+    ...allParticipants
       .filter(p => p['First Name'] && p['First Name'].toLowerCase().includes(query))
       .map(p => p['First Name'])
-      .sort()
-  )].slice(0, 10); // Limit to 10 results
+  ].sort())].slice(0, 10); // Limit to 10 results
   
   if (matchingNames.length === 0) {
     firstNameDropdown.classList.add('hidden');
@@ -456,20 +475,37 @@ function showFirstNameAutocomplete() {
 
 function showLastNameAutocomplete() {
   const input = document.getElementById('searchLastName');
+  const firstNameInput = document.getElementById('searchFirstName');
   const query = input.value.trim().toLowerCase();
+  const selectedFirstName = firstNameInput.value.trim();
   
   if (query.length < 2) {
     lastNameDropdown.classList.add('hidden');
     return;
   }
   
-  // Get unique last names that match the query
-  const matchingNames = [...new Set(
-    allParticipants
+  let filteredParticipants = allParticipants;
+  
+  // If a first name is selected, filter participants to only those with that first name
+  // Check both contact first name and participant first name
+  if (selectedFirstName) {
+    filteredParticipants = allParticipants.filter(p => 
+      (p['Contact First Name'] && p['Contact First Name'].toLowerCase() === selectedFirstName.toLowerCase()) ||
+      (p['First Name'] && p['First Name'].toLowerCase() === selectedFirstName.toLowerCase())
+    );
+  }
+  
+  // Get unique last names (both contact and participant) that match the query from the filtered participants
+  const matchingNames = [...new Set([
+    // Contact last names
+    ...filteredParticipants
+      .filter(p => p['Contact Last Name'] && p['Contact Last Name'].toLowerCase().includes(query))
+      .map(p => p['Contact Last Name']),
+    // Participant last names
+    ...filteredParticipants
       .filter(p => p['Last Name'] && p['Last Name'].toLowerCase().includes(query))
       .map(p => p['Last Name'])
-      .sort()
-  )].slice(0, 10); // Limit to 10 results
+  ].sort())].slice(0, 10); // Limit to 10 results
   
   if (matchingNames.length === 0) {
     lastNameDropdown.classList.add('hidden');
@@ -485,6 +521,8 @@ function showLastNameAutocomplete() {
 
 function selectFirstName(name) {
   document.getElementById('searchFirstName').value = name;
+  // Clear last name when first name is selected to maintain dependent relationship
+  document.getElementById('searchLastName').value = '';
   firstNameDropdown.classList.add('hidden');
 }
 
