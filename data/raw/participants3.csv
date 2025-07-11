@@ -330,7 +330,7 @@
 173,"Krishnamurthy ",Balaji,4krisb@gmail.com,Balaji,Geetha,F,Adult,36 to 59 years old,PAID,decided
 175,Avadhani,Madan,mavadhani@hotmail.com,Avadhani,Madan,M,Adult,36 to 59 years old,PAID,decided
 176,Bhartia,Sandeep,sandybhartia@gmail.com,Bhartia,Sandeep,M,Adult,36 to 59 years old,NOT PAID,undecided
-178,Emir,Rudite,rudite.emir@gmail.com,Emir,Rudite,F,Adult,60 years and above,PAID,decided
+178,Emir,Rudite,rudite.emir@gmail.com,Emir,Rudite,F,Adult,60 years and above,PAID,cancelled
 179,Murali,Bhuvanesh,bhuv8.13@gmail.com,Murali,Bhuvanesh,M,CHYK Non-working,CHYK Non-working,PAID,decided
 181,Iyengar,Rajashri,rajashri.iyengar@cmsj.org,Iyengar,Rajashri,F,Adult,36 to 59 years old,PAID,decided
 182,Avadhanula,Suvarna,jlakshmisuvarna@gmail.com,Avadhanula,Suvarna,F,Adult,36 to 59 years old,PAID,decided
@@ -1353,3 +1353,12 @@
 717,Relan,Renu Prasad,renupr@yahoo.com,Empranthiri,Divya,F,CHYK Non-working,CHYK Non-working,PARTLY PAID,decided
 718,Relan,Renu Prasad,renupr@yahoo.com,Empranthiri,Vinod,M,Adult,36 to 59 years old,PARTLY PAID,decided
 718,Relan,Renu Prasad,renupr@yahoo.com,Empranthiri,Maya,F,Adult,36 to 59 years old,PARTLY PAID,decided
+720,Vakharia,Renu,renu.vakharia@gmail.com,Vakharia,"Rajendra ",M,Adult,60 years and above,PARTLY PAID,decided
+720,Vakharia,Renu,renu.vakharia@gmail.com,Vakharia,Renu,M,Adult,60 years and above,PARTLY PAID,decided
+719,Vakharia,Renu,renu.vakharia@gmail.com,Vakharia,"Rajendra ",M,Adult,60 years and above,NOT PAID,duplicate
+719,Vakharia,Renu,renu.vakharia@gmail.com,Vakharia,Renu,M,Adult,60 years and above,NOT PAID,duplicate
+721,Mehta,Vinita,dhannya15@gmail.com,Mehta,Vinita,F,Adult,60 years and above,PAID,decided
+722,Mahadev,"Parameswaran ",mahadevparam@yahoo.com,Mahadev,"Parameswaran ",M,Adult,60 years and above,NOT PAID,duplicate
+722,Mahadev,"Parameswaran ",mahadevparam@yahoo.com,MAHADEV,VIJAYALAKSHMI,F,Adult,60 years and above,NOT PAID,duplicate
+723,mahadev,parameswaran,mahadevparam@yahoo.com,Mahadev,Parameswaran,M,Adult,60 years and above,PAID,decided
+723,mahadev,parameswaran,mahadevparam@yahoo.com,Mahadev,Vijayalakshmi,F,Adult,60 years and above,PAID,decided

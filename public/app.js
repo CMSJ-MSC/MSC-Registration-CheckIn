@@ -2,6 +2,7 @@
 let allParticipants = [];
 let firstNameDropdown = null;
 let lastNameDropdown = null;
+let emailDropdown = null;
 
 function checkPassword() {
   const password = prompt("Please enter the password to access the MSC Check-In App:");
@@ -30,18 +31,49 @@ window.onload = function() {
   // Initialize autocomplete dropdowns
   firstNameDropdown = document.getElementById('firstNameDropdown');
   lastNameDropdown = document.getElementById('lastNameDropdown');
+  emailDropdown = document.getElementById('emailDropdown');
   
   // Add event listeners for autocomplete
   const firstNameInput = document.getElementById('searchFirstName');
   const lastNameInput = document.getElementById('searchLastName');
+  const emailInput = document.getElementById('searchEmail');
   
   firstNameInput.addEventListener('input', () => showFirstNameAutocomplete());
   lastNameInput.addEventListener('input', () => showLastNameAutocomplete());
+  emailInput.addEventListener('input', () => showEmailAutocomplete());
   
   // Clear last name when first name changes to maintain dependent relationship
   firstNameInput.addEventListener('input', () => {
     const lastNameInput = document.getElementById('searchLastName');
     if (lastNameInput.value) {
+      lastNameInput.value = '';
+      hideAllDropdowns();
+    }
+  });
+  
+  // Clear email when name fields change to maintain independent search
+  firstNameInput.addEventListener('input', () => {
+    const emailInput = document.getElementById('searchEmail');
+    if (emailInput.value) {
+      emailInput.value = '';
+      hideAllDropdowns();
+    }
+  });
+  
+  lastNameInput.addEventListener('input', () => {
+    const emailInput = document.getElementById('searchEmail');
+    if (emailInput.value) {
+      emailInput.value = '';
+      hideAllDropdowns();
+    }
+  });
+  
+  // Clear name fields when email changes to maintain independent search
+  emailInput.addEventListener('input', () => {
+    const firstNameInput = document.getElementById('searchFirstName');
+    const lastNameInput = document.getElementById('searchLastName');
+    if (firstNameInput.value || lastNameInput.value) {
+      firstNameInput.value = '';
       lastNameInput.value = '';
       hideAllDropdowns();
     }
@@ -531,9 +563,43 @@ function selectLastName(name) {
   lastNameDropdown.classList.add('hidden');
 }
 
+function showEmailAutocomplete() {
+  const input = document.getElementById('searchEmail');
+  const query = input.value.trim().toLowerCase();
+  
+  if (query.length < 2) {
+    emailDropdown.classList.add('hidden');
+    return;
+  }
+  
+  // Get unique emails that match the query
+  const matchingEmails = [...new Set(
+    allParticipants
+      .filter(p => p['Email'] && p['Email'].toLowerCase().includes(query))
+      .map(p => p['Email'])
+  )].sort().slice(0, 10); // Limit to 10 results
+  
+  if (matchingEmails.length === 0) {
+    emailDropdown.classList.add('hidden');
+    return;
+  }
+  
+  emailDropdown.innerHTML = matchingEmails
+    .map(email => `<div class="px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm" onclick="selectEmail('${email}')">${email}</div>`)
+    .join('');
+  
+  emailDropdown.classList.remove('hidden');
+}
+
+function selectEmail(email) {
+  document.getElementById('searchEmail').value = email;
+  emailDropdown.classList.add('hidden');
+}
+
 function hideAllDropdowns() {
   firstNameDropdown.classList.add('hidden');
   lastNameDropdown.classList.add('hidden');
+  emailDropdown.classList.add('hidden');
 }
 
 loadData(); // Initial load
