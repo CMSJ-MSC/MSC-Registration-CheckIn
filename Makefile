@@ -17,7 +17,7 @@ main:
 	git pull origin main
 
 user-reset:
-	git config user.name "Anvay Bhanap"
+	git config user.name "AnvayB"
 	git config user.email "anvaybhanap@gmail.com"
 
 user-check:
