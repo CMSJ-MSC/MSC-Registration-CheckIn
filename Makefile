@@ -18,7 +18,7 @@ main:
 
 user-reset:
 	git config user.name "AnvayB"
-	git config user.email "anvaybhanap@gmail.com"
+	git config user.email "anvay.bhanap@gmail.com"
 
 user-check:
 	git config user.name
