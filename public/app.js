@@ -339,37 +339,37 @@ async function loadData() {
 const APP_PASSWORD = "msc2025" || "Msc2025";
 const DOWNLOAD_PASSWORD = "msc2025admin ";
 
-async function resetAllCheckins() {
-  const password = prompt("Please enter the admin password to reset all check-ins:");
-  if (password !== DOWNLOAD_PASSWORD) {
-    alert("Incorrect password. Reset cancelled.");
-    return;
-  }
+// async function resetAllCheckins() {
+//   const password = prompt("Please enter the admin password to reset all check-ins:");
+//   if (password !== DOWNLOAD_PASSWORD) {
+//     alert("Incorrect password. Reset cancelled.");
+//     return;
+//   }
 
-  if (!confirm('Are you sure you want to clear all check-ins? This cannot be undone.')) return;
+//   if (!confirm('Are you sure you want to clear all check-ins? This cannot be undone.')) return;
 
-  try {
-    const response = await fetch('/participants');
-    const participants = await response.json();
+//   try {
+//     const response = await fetch('/participants');
+//     const participants = await response.json();
 
-    for (const participant of participants) {
-      await fetch('/checkin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          firstName: participant['First Name'],
-          lastName: participant['Last Name'],
-          checkedIn: false
-        })
-      });
-    }
+//     for (const participant of participants) {
+//       await fetch('/checkin', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({
+//           firstName: participant['First Name'],
+//           lastName: participant['Last Name'],
+//           checkedIn: false
+//         })
+//       });
+//     }
 
-    loadData();
-  } catch (error) {
-    console.error('Failed to reset check-ins:', error);
-    alert('Failed to reset check-ins. Please try again.');
-  }
-}
+//     loadData();
+//   } catch (error) {
+//     console.error('Failed to reset check-ins:', error);
+//     alert('Failed to reset check-ins. Please try again.');
+//   }
+// }
 
 function resetSearch() {
   document.getElementById('searchFamilyID').value = '';

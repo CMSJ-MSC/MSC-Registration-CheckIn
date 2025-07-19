@@ -139,6 +139,7 @@
 66,Sundaram,Jawahar,padma.jawahar@cmsj.org,jawahar,Naren,M,CHYK Non-working,CHYK Non-working,PAID,decided
 67,Sharma,"Lalet ",lalet.sharma@cmsj.org,Sharma,"Lalet ",M,Adult,60 years and above,PAID,decided
 67,Sharma,"Lalet ",lalet.sharma@cmsj.org,Sharma,"Sadhna ",F,Adult,60 years and above,PAID,decided
+67,Sharma,"Lalet ",lalet.sharma@cmsj.org,Sharma,Yuv,M,Child,2,PAID,decided
 69,Lakshmanan,Shobhana,shobhana.lakshmanan@cmsj.org,Lakshmanan,Shobhana,F,Adult,36 to 59 years old,PAID,decided
 69,Lakshmanan,Shobhana,shobhana.lakshmanan@cmsj.org,Raman,Lakshmanan,M,Adult,36 to 59 years old,PAID,decided
 69,Lakshmanan,Shobhana,shobhana.lakshmanan@cmsj.org,Lakshmanan,Divya,F,CHYK Non-working,CHYK Non-working,PAID,decided
@@ -172,7 +173,7 @@
 81,Pol,Sanjay,sanjay.pol@cmsj.org,Pol,Nishant,M,Adult,30 to 35 years old,PAID,decided
 81,Pol,Sanjay,sanjay.pol@cmsj.org,Pol,Nihar,M,CHYK Working,CHYK Working,PAID,decided
 82,Sitaraman,Arun,arun_sitaraman@hotmail.com,Sitaraman,Arun,M,Adult,60 years and above,NOT PAID,undecided
-83,Manjunath,A,acmanjunath29@gmail.com,Manjunath,A,M,Adult,36 to 59 years old,PAID,decided
+83,Manjunath,A,acmanjunath29@gmail.com,Manjunath,AC,M,Adult,36 to 59 years old,PAID,decided
 83,Manjunath,A,acmanjunath29@gmail.com,Manjunath,Aashrita,F,CHYK Non-working,CHYK Non-working,PAID,decided
 83,Manjunath,A,acmanjunath29@gmail.com,Manjunath,Sonya,F,Adult,36 to 59 years old,PAID,decided
 84,Sarnikar,Subhash,sarnikars@yahoo.com,Sarnikar,Subhash,M,Adult,60 years and above,PAID,decided
@@ -523,8 +524,8 @@
 263,Sundaresan,Arun,arunsun@hotmail.com,Sundararajan,Bharati,F,Adult,36 to 59 years old,PAID,decided
 264,Achar,Ramachandra,suchiram@hotmail.com,Achar,Ramachandra,M,Adult,60 years and above,PAID,decided
 264,Achar,Ramachandra,suchiram@hotmail.com,Achar,Sucharita,F,Adult,36 to 59 years old,PAID,decided
-265,Rao,Geetha,grao@cmsj.org,Rao,Geetha,F,Adult,36 to 59 years old,PAID,decided
-265,Rao,Geetha,grao@cmsj.org,Rao,Sachin,M,CHYK Non-working,CHYK Non-working,PAID,decided
+265,Rao,Geetha,grao@cmsj.org,Rao,Geetha,F,Adult,36 to 59 years old,PARTLY PAID,decided
+265,Rao,Geetha,grao@cmsj.org,Rao,Sachin,M,CHYK Non-working,CHYK Non-working,PARTLY PAID,decided
 266,Pareek,Anu,anuextra@hotmail.com,Pareek,Anu,F,Adult,60 years and above,NOT PAID,refunded
 267,Ganapathi,Nivedita,nitaganapathi@gmail.com,Ganapathi,Nivedita,F,Adult,36 to 59 years old,PAID,decided
 268,Dornadula,Apoorva,nexusapoorvacus19@gmail.com,Dornadula,Apoorva,F,Adult,30 to 35 years old,PAID,decided
@@ -959,7 +960,7 @@
 495,Gupta,Ranjani,ranjani.akula@gmail.com,Gupta,Sachin,M,Adult,36 to 59 years old,PAID,decided
 495,Gupta,Ranjani,ranjani.akula@gmail.com,Gupta,Satya,M,Child,KG,PAID,decided
 495,Gupta,Ranjani,ranjani.akula@gmail.com,Gupta,Shivam,M,Child,Pre-KG,PAID,decided
-496,Raman,Ananth,ananthap1@gmail.com,Raman,Ananth,M,Adult,60 years and above,PAID,decided
+496,Raman,Ananth,ananthap1@gmail.com,Raman,Ananth,M,Adult,60 years and above,PAID,cancelled
 497,Jaggi,"Bhupinder ",bkjaggi@yahoo.com,Jaggi,"Bhupinder ",M,Adult,60 years and above,NOT PAID,undecided
 498,"Jaggi ","Bhupinder ",bkjaggi@yahoo.com,"Jaggi ","Bhupinder ",M,Adult,60 years and above,NOT PAID,undecided
 499,"Jaggi ","Bhupinder ",bkjaggi@yahoo.com,"Jaggi ","Bhupinder ",M,Adult,60 years and above,NOT PAID,refunded
@@ -987,7 +988,7 @@
 508,Mohan,Ashwin,ashwin.mohan@gmail.com,Venkitaraman,Priya,F,Adult,36 to 59 years old,PAID,decided
 508,Mohan,Ashwin,ashwin.mohan@gmail.com,Iyer,Adhvay,M,Child,9,PAID,decided
 508,Mohan,Ashwin,ashwin.mohan@gmail.com,Iyer,Dhvani,F,Child,3,PAID,decided
-509,Kotapati,Aparna,aparna.kotapati@gmail.com,Kotapati,Aparna,F,Adult,36 to 59 years old,PAID,decided
+509,Kotapati,Aparna,aparna.kotapati@gmail.com,Kotapati,Aparna,F,Adult,36 to 59 years old,PAID,cancelled
 510,Pandya,Jigar,jplinkup@gmail.com,Pandya,Jigar,M,Adult,36 to 59 years old,PAID,decided
 510,Pandya,Jigar,jplinkup@gmail.com,Pandya,Snehal,F,Adult,36 to 59 years old,PAID,decided
 510,Pandya,Jigar,jplinkup@gmail.com,Pandya,Neha,F,Child,11,PAID,decided
@@ -1137,7 +1138,7 @@
 585,sINGH,k,indrasingh@shaw.ca,tbd,TBD,F,Adult,60 years and above,NOT PAID,duplicate
 586,sINGH,k,indrasingh@shaw.ca,Singh,Indra,F,Adult,60 years and above,PAID,decided
 587,Gupta,Namita,gupta.namita@gmail.com,Gupta,Namita,F,Adult,36 to 59 years old,NOT PAID,duplicate
-588,Gupta,Namita,gupta.namita@gmail.com,Gupta,Namita,F,Adult,36 to 59 years old,PAID,decided
+588,Gupta,Namita,gupta.namita@gmail.com,Gupta,Namita,F,Adult,36 to 59 years old,PAID,cancelled
 589,Trivedi,Kavita,KAVITA_TRIVEDI@HOTMAIL.COM,Trivedi,Kavita,F,Adult,36 to 59 years old,PAID,decided
 589,Trivedi,Kavita,KAVITA_TRIVEDI@HOTMAIL.COM,Ranchod,Ishaan,M,Child,11,PAID,decided
 589,Trivedi,Kavita,KAVITA_TRIVEDI@HOTMAIL.COM,Ranchod,Kairav,M,Child,8,PAID,decided
@@ -1145,6 +1146,7 @@
 590,Narayan,Padmini,pnar98@yahoo.com,Srinivasan,Ashwin,M,CHYK Working,CHYK Working,PAID,decided
 591,Ramachandran,Ram,ramr@chinmayavrindavan.org,Ramachandran,Ram,M,Adult,36 to 59 years old,PAID,decided
 591,Ramachandran,Ram,ramr@chinmayavrindavan.org,Ramachandran,Anandhi,F,Adult,36 to 59 years old,PAID,decided
+591,Ramachandran,Ram,ramr@chinmayavrindavan.org,Ramachandran,Abhiram,M,CHYK Non-working,CHYK Non-working,PAID,decided
 592,"Thacker ",Rupa,doctor.rupa@gmail.com,"Thacker ",Rupa,F,Adult,36 to 59 years old,NOT PAID,undecided
 592,"Thacker ",Rupa,doctor.rupa@gmail.com,Rathod,"Ankit ",M,Adult,36 to 59 years old,NOT PAID,undecided
 592,"Thacker ",Rupa,doctor.rupa@gmail.com,Rathod,"Viyana ",F,Child,2,NOT PAID,undecided
@@ -1319,7 +1321,7 @@
 698,Ramachandran,Rohit,rohit.m.ramachandran@gmail.com,Ramachandran,Rohit,M,CHYK Non-working,CHYK Non-working,PAID,decided
 699,Gupta,Salil,salilg56@hotmail.com,Gupta,Salil,M,Adult,60 years and above,PAID,decided
 700,Vayalapalli,Amoolya,2000amoolya@gmail.com,Vayalapalli,Amoolya,F,CHYK Non-working,CHYK Non-working,PAID,decided
-701,Rajasekaran,Anu,uvraams@gmail.com,Rajasekaran,Anu,F,Adult,60 years and above,PAID,decided
+701,Rajasekaran,Anu,uvraams@gmail.com,Rajasekaran,Anu,F,Adult,60 years and above,PAID,cancelled
 702,raj,nimmi,nimmicmla@gmail.com,raj,nimmi,F,Adult,36 to 59 years old,PAID,decided
 703,Ignore,Test,parag@cmsj.org,Ignore,Test,M,Adult,36 to 59 years old,NOT PAID,undecided
 704,Yalamanchi,Sudha,sudhakparimi30@gmail.com,Parimi,Krishniah,M,Adult,60 years and above,PAID,decided
@@ -1353,8 +1355,8 @@
 717,Relan,Renu Prasad,renupr@yahoo.com,Empranthiri,Divya,F,CHYK Non-working,CHYK Non-working,PARTLY PAID,decided
 718,Relan,Renu Prasad,renupr@yahoo.com,Empranthiri,Vinod,M,Adult,36 to 59 years old,PARTLY PAID,decided
 718,Relan,Renu Prasad,renupr@yahoo.com,Empranthiri,Maya,F,Adult,36 to 59 years old,PARTLY PAID,decided
-720,Vakharia,Renu,renu.vakharia@gmail.com,Vakharia,"Rajendra ",M,Adult,60 years and above,PARTLY PAID,decided
-720,Vakharia,Renu,renu.vakharia@gmail.com,Vakharia,Renu,M,Adult,60 years and above,PARTLY PAID,decided
+720,Vakharia,Renu,renu.vakharia@gmail.com,Vakharia,"Rajendra ",M,Adult,60 years and above,PAID,decided
+720,Vakharia,Renu,renu.vakharia@gmail.com,Vakharia,Renu,M,Adult,60 years and above,PAID,decided
 719,Vakharia,Renu,renu.vakharia@gmail.com,Vakharia,"Rajendra ",M,Adult,60 years and above,NOT PAID,duplicate
 719,Vakharia,Renu,renu.vakharia@gmail.com,Vakharia,Renu,M,Adult,60 years and above,NOT PAID,duplicate
 721,Mehta,Vinita,dhannya15@gmail.com,Mehta,Vinita,F,Adult,60 years and above,PAID,decided
@@ -1362,3 +1364,9 @@
 722,Mahadev,"Parameswaran ",mahadevparam@yahoo.com,MAHADEV,VIJAYALAKSHMI,F,Adult,60 years and above,NOT PAID,duplicate
 723,mahadev,parameswaran,mahadevparam@yahoo.com,Mahadev,Parameswaran,M,Adult,60 years and above,PAID,decided
 723,mahadev,parameswaran,mahadevparam@yahoo.com,Mahadev,Vijayalakshmi,F,Adult,60 years and above,PAID,decided
+724,"Bannirchelvam ","Shanthakumar ",s.bannir@gmail.com,"Bannirchelvam ","Shanthakumar ",F,Adult,36 to 59 years old,NOT PAID,duplicate
+724,"Bannirchelvam ","Shanthakumar ",s.bannir@gmail.com,Kucchal,Tarinee,F,Adult,36 to 59 years old,NOT PAID,duplicate
+725,"Bannirchelvam ","Shanthakumar ",s.bannir@gmail.com,"Bannirchelvam ","Shanthakumar ",F,Adult,36 to 59 years old,NOT PAID,duplicate
+725,"Bannirchelvam ","Shanthakumar ",s.bannir@gmail.com,Kucchal,Tarinee,F,Adult,36 to 59 years old,NOT PAID,duplicate
+726,bannirchelvam,Shanthakumar,sbanmarketing@gmail.com,Bannirchelvam,Shanthakumar,M,Adult,36 to 59 years old,PAID,decided
+726,bannirchelvam,Shanthakumar,sbanmarketing@gmail.com,Kucchal,Tarinee,F,Adult,30 to 35 years old,PAID,decided
