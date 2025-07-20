@@ -58,4 +58,18 @@ input:invalid:focus {
   .mobile-card {
     display: block;
   }
+}
+
+/* Tooltip styles to ensure they appear on top */
+.group:hover .z-\[9999\] {
+  z-index: 9999 !important;
+}
+
+/* Ensure table cells allow tooltip overflow */
+#regTable td {
+  overflow: visible !important;
+}
+
+#regTable th {
+  overflow: visible !important;
 } 
