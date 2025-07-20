@@ -131,7 +131,28 @@ app.get('/download', async (req, res) => {
         }
       });
     } else {
-      const filePath = path.join(__dirname, 'data/participants3_cleaned.csv');
+      // Create a user-friendly CSV with the transformed data
+      const csvWriter = createCsvWriter({
+        path: path.join(__dirname, 'data/MSC-Checkin-Export.csv'),
+        header: [
+          { id: 'Family ID', title: 'Family ID' },
+          { id: 'Contact First Name', title: 'Contact First Name' },
+          { id: 'Contact Last Name', title: 'Contact Last Name' },
+          { id: 'Email', title: 'Email' },
+          { id: 'Center', title: 'Center' },
+          { id: 'First Name', title: 'First Name' },
+          { id: 'Last Name', title: 'Last Name' },
+          { id: 'Gender', title: 'Gender' },
+          { id: 'Category', title: 'Category' },
+          { id: 'PAID', title: 'PAID' },
+          { id: 'Decided', title: 'Decided' },
+          { id: 'checkin', title: 'Check-in Status' }
+        ]
+      });
+
+      await csvWriter.writeRecords(participants);
+      
+      const filePath = path.join(__dirname, 'data/MSC-Checkin-Export.csv');
       return res.download(filePath, 'MSC-Checkin.csv', err => {
         if (err) {
           console.error('CSV download error:', err);
