@@ -237,8 +237,8 @@ async function loadData() {
             <svg class="w-5 h-5 text-gray-600 hover:text-gray-800 cursor-help" fill="currentColor" viewBox="0 0 20 20">
               <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
             </svg>
-            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-[9999]">
-              ${member['Center'] || 'N/A'}
+            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-[9999] text-center">
+              ${member['Center'] || 'N/A'}<br>${member['City'] || 'N/A'}
             </div>
           </div>
         </td>
@@ -296,6 +296,7 @@ async function loadData() {
         <p><strong>Contact:</strong> ${member['Contact First Name'] || ''} ${member['Contact Last Name'] || ''}</p>
         <p><strong>Name:</strong> ${member['First Name'] || ''} ${member['Last Name'] || ''}</p>
         <p><strong>Center:</strong> ${member['Center'] || 'N/A'}</p>
+        <p><strong>City:</strong> ${member['City'] || 'N/A'}</p>
         <p><strong>Category:</strong> <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getGradeAgeCategoryColor(member['Category'])}">${formatGradeAgeCategory(member['Category'] || '')}</span></p>
         <p><strong>Gender:</strong> ${gender || 'N/A'}</p>
         <p><strong>Status:</strong> <span class="${isCheckedIn ? 'text-green-600' : 'text-red-600'}">${isCheckedIn ? '✅ Checked In' : '❌ Not Checked In'}</span></p>
