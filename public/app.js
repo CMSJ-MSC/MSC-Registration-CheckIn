@@ -176,10 +176,15 @@ async function loadData() {
     const uniqueFamilyIDs = [...new Set(filtered.map(member => member['Family ID']))].filter(id => id && id !== '');
     if (uniqueFamilyIDs.length > 1) {
       if (!sessionStorage.getItem('multiFamilyIdAlertShown')) {
-        alert('This entry has multiple family IDs. Please confirm with the participant which family members are being checked in and note that on the written form');
+        alert(
+          '⚠️ This entry has multiple family IDs.\n' +
+          '\n' +
+          'Please confirm with participant which family members are being checked in.\n' +  '\n' +
+          'Remember to note this on the written form.'
+        );
         sessionStorage.setItem('multiFamilyIdAlertShown', 'true');
       } else {
-        alert('Note: This entry has multiple family IDs');
+        alert('Note: This entry has multiple family IDs.');
       }
     }
     // --- END MULTIPLE FAMILY ID ALERT LOGIC ---
