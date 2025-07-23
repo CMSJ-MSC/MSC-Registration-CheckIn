@@ -172,6 +172,18 @@ async function loadData() {
       return false;
     });
 
+    // --- MULTIPLE FAMILY ID ALERT LOGIC ---
+    const uniqueFamilyIDs = [...new Set(filtered.map(member => member['Family ID']))].filter(id => id && id !== '');
+    if (uniqueFamilyIDs.length > 1) {
+      if (!sessionStorage.getItem('multiFamilyIdAlertShown')) {
+        alert('This entry has multiple family IDs. Please confirm with the participant which family members are being checked in and note that on the written form');
+        sessionStorage.setItem('multiFamilyIdAlertShown', 'true');
+      } else {
+        alert('Note: This entry has multiple family IDs');
+      }
+    }
+    // --- END MULTIPLE FAMILY ID ALERT LOGIC ---
+
     if (filtered.length === 0) {
       emptyState.classList.remove('hidden');
       return;
