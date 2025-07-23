@@ -911,8 +911,8 @@ Family ID,ContactName.first,ContactName.last,Email,Center,City,Participants.name
 716,Kavita,Chanrai,sushi.chanrai@gmail.com,cm_other,Hollywood,Kavita,Chanrai,F,Adult,PAID,decided,
 717,Renu Prasad,Relan,renupr@yahoo.com,cm_San_Jose,Atherton,Geeta,Arora,F,Adult,PARTLY PAID,decided,checked-in
 717,Renu Prasad,Relan,renupr@yahoo.com,cm_San_Jose,Atherton,Divya,Empranthiri,F,Adult,PARTLY PAID,decided,checked-in
-718,Renu Prasad,Relan,renupr@yahoo.com,cm_San_Jose,Atherton,Vinod,Empranthiri,M,Adult,PARTLY PAID,decided,checked-in
-718,Renu Prasad,Relan,renupr@yahoo.com,cm_San_Jose,Atherton,Maya,Empranthiri,F,Adult,PARTLY PAID,decided,checked-in
+718,Renu Prasad,Relan,renupr@yahoo.com,cm_San_Jose,Atherton,Vinod,Empranthiri,M,Adult,PAID,decided,checked-in
+718,Renu Prasad,Relan,renupr@yahoo.com,cm_San_Jose,Atherton,Maya,Empranthiri,F,Adult,PAID,decided,checked-in
 720,Renu,Vakharia,renu.vakharia@gmail.com,cm_San_Jose,Berkeley,Rajendra,Vakharia,M,Adult,PAID,decided,checked-in
 720,Renu,Vakharia,renu.vakharia@gmail.com,cm_San_Jose,Berkeley,Renu,Vakharia,M,Adult,PAID,decided,checked-in
 721,Vinita,Mehta,dhannya15@gmail.com,cm_Alpharetta,Atlanta,Vinita,Mehta,F,Adult,PAID,decided,
