@@ -92,6 +92,35 @@ tailwind.config = {
   }
 }
 
+// Function to reload data while preserving current search state
+async function reloadDataPreservingSearch() {
+  try {
+    const res = await fetch('/participants');
+    const data = await res.json();
+    
+    // Update global participants data for autocomplete
+    allParticipants = data;
+    
+    // Get current search values
+    const familyID = document.getElementById('searchFamilyID').value.trim().toLowerCase();
+    const firstName = document.getElementById('searchFirstName').value.trim().toLowerCase();
+    const lastName = document.getElementById('searchLastName').value.trim().toLowerCase();
+    const email = document.getElementById('searchEmail').value.trim().toLowerCase();
+    const resultsSection = document.getElementById('resultsSection');
+
+    // If no search criteria, don't show results
+    if (!familyID && !firstName && !lastName && !email) {
+      resultsSection.classList.add('hidden');
+      return;
+    }
+
+    // Continue with the same logic as loadData but without re-filtering
+    await displayFilteredResults(data, familyID, firstName, lastName, email);
+  } catch (error) {
+    console.error('Failed to reload data:', error);
+  }
+}
+
 async function loadData() {
   try {
     const res = await fetch('/participants');
@@ -118,86 +147,95 @@ async function loadData() {
 
     resultsSection.classList.remove('hidden');
 
+    await displayFilteredResults(data, familyID, firstName, lastName, email);
+  } catch (error) {
+    console.error('Failed to load data:', error);
+  }
+}
+
+// Function to display filtered results
+async function displayFilteredResults(data, familyID, firstName, lastName, email) {
+  try {
     const tbody = document.querySelector('#regTable tbody');
     const emptyState = document.getElementById('emptyState');
     const mobileCards = document.getElementById('mobileCards');
 
-    tbody.innerHTML = '';
-    mobileCards.innerHTML = '';
+  tbody.innerHTML = '';
+  mobileCards.innerHTML = '';
 
-    // First, find all unique contact emails that match the search criteria
-    let matchingContactEmails = new Set();
+  // First, find all unique contact emails that match the search criteria
+  let matchingContactEmails = new Set();
 
-    // If searching by email, use that directly
-    if (email) {
-      matchingContactEmails.add(email);
-    }
+  // If searching by email, use that directly
+  if (email) {
+    matchingContactEmails.add(email);
+  }
 
-    // If searching by name, find the contact email associated with that name
-    if (firstName && lastName) {
-      data.forEach(member => {
-        // Check participant names
-        const pFName = (member['First Name'] || '').toLowerCase();
-        const pLName = (member['Last Name'] || '').toLowerCase();
-        // Check contact names
-        const cFName = (member['Contact First Name'] || '').toLowerCase();
-        const cLName = (member['Contact Last Name'] || '').toLowerCase();
-        
-        if ((pFName === firstName && pLName === lastName) || 
-            (cFName === firstName && cLName === lastName)) {
-          matchingContactEmails.add(member['Email'].toLowerCase());
-        }
-      });
-    }
-
-    // If searching by family ID, find all emails associated with that family ID
-    if (familyID) {
-      data.forEach(member => {
-        const fID = (member['Family ID'] || '').toLowerCase();
-        if (fID === familyID) {
-          matchingContactEmails.add(member['Email'].toLowerCase());
-        }
-      });
-    }
-
-    // Filter participants based on matching contact emails
-    const filtered = data.filter(member => {
-      const memberEmail = (member['Email'] || '').toLowerCase();
-
-      // If we have matching contact emails, check if this member's email matches any of them
-      if (matchingContactEmails.size > 0) {
-        return matchingContactEmails.has(memberEmail);
+  // If searching by name, find the contact email associated with that name
+  if (firstName && lastName) {
+    data.forEach(member => {
+      // Check participant names
+      const pFName = (member['First Name'] || '').toLowerCase();
+      const pLName = (member['Last Name'] || '').toLowerCase();
+      // Check contact names
+      const cFName = (member['Contact First Name'] || '').toLowerCase();
+      const cLName = (member['Contact Last Name'] || '').toLowerCase();
+      
+      if ((pFName === firstName && pLName === lastName) || 
+          (cFName === firstName && cLName === lastName)) {
+        matchingContactEmails.add(member['Email'].toLowerCase());
       }
-
-      return false;
     });
+  }
 
-    // --- MULTIPLE FAMILY ID ALERT LOGIC ---
-    const uniqueFamilyIDs = [...new Set(filtered.map(member => member['Family ID']))].filter(id => id && id !== '');
-    if (uniqueFamilyIDs.length > 1) {
-      if (!sessionStorage.getItem('multiFamilyIdAlertShown')) {
-        alert(
-          '⚠️ This entry has multiple family IDs.\n' +
-          '\n' +
-          'Please confirm with participant which family members are being checked in.\n' +  '\n' +
-          'Remember to note this on the written form.'
-        );
-        sessionStorage.setItem('multiFamilyIdAlertShown', 'true');
-      } else {
-        alert('Note: This entry has multiple family IDs.');
+  // If searching by family ID, find all emails associated with that family ID
+  if (familyID) {
+    data.forEach(member => {
+      const fID = (member['Family ID'] || '').toLowerCase();
+      if (fID === familyID) {
+        matchingContactEmails.add(member['Email'].toLowerCase());
       }
-    }
-    // --- END MULTIPLE FAMILY ID ALERT LOGIC ---
+    });
+  }
 
-    if (filtered.length === 0) {
-      emptyState.classList.remove('hidden');
-      return;
+  // Filter participants based on matching contact emails
+  const filtered = data.filter(member => {
+    const memberEmail = (member['Email'] || '').toLowerCase();
+
+    // If we have matching contact emails, check if this member's email matches any of them
+    if (matchingContactEmails.size > 0) {
+      return matchingContactEmails.has(memberEmail);
+    }
+
+    return false;
+  });
+
+  // --- MULTIPLE FAMILY ID ALERT LOGIC ---
+  const uniqueFamilyIDs = [...new Set(filtered.map(member => member['Family ID']))].filter(id => id && id !== '');
+  if (uniqueFamilyIDs.length > 1) {
+    if (!sessionStorage.getItem('multiFamilyIdAlertShown')) {
+      alert(
+        '⚠️ This entry has multiple family IDs.\n' +
+        '\n' +
+        'Please confirm with participant which family members are being checked in.\n' +  '\n' +
+        'Remember to note this on the written form.'
+      );
+      sessionStorage.setItem('multiFamilyIdAlertShown', 'true');
     } else {
-      emptyState.classList.add('hidden');
+      alert('Note: This entry has multiple family IDs.');
     }
+  }
+  // --- END MULTIPLE FAMILY ID ALERT LOGIC ---
 
-    // Sort filtered results by Family ID to group family members together
-    filtered.sort((a, b) => (a['Family ID'] || '').localeCompare(b['Family ID'] || ''));
+  if (filtered.length === 0) {
+    emptyState.classList.remove('hidden');
+    return;
+  } else {
+    emptyState.classList.add('hidden');
+  }
+
+  // Sort filtered results by Family ID to group family members together
+  filtered.sort((a, b) => (a['Family ID'] || '').localeCompare(b['Family ID'] || ''));
 
     filtered.forEach((member, index) => {
       const isCheckedIn = member.checkin === 'checked-in';
@@ -231,7 +269,8 @@ async function loadData() {
               checkedIn: checkbox.checked
             })
           });
-          loadData();
+          // Reload data but preserve current search state
+          await reloadDataPreservingSearch();
         } catch (error) {
           console.error('Check-in failed:', error);
           checkbox.checked = !checkbox.checked;
@@ -326,7 +365,8 @@ async function loadData() {
               checkedIn: mobileCheckbox.checked
             })
           });
-          loadData();
+          // Reload data but preserve current search state
+          await reloadDataPreservingSearch();
         } catch (error) {
           console.error('Check-in failed:', error);
           mobileCheckbox.checked = !mobileCheckbox.checked;
@@ -356,7 +396,7 @@ async function loadData() {
   }
 }
 
-const APP_PASSWORD = "msc2025" || "Msc2025";
+const APP_PASSWORD = "msc2025";
 const DOWNLOAD_PASSWORD = "msc2025admin ";
 
 // async function resetAllCheckins() {
