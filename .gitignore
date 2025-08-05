@@ -1,3 +1,8 @@
 .DS_Store
 geographic/
 chyk_participants.xlsx
+raw/
+cff_participants.xlsx
+cff_participants_cleaned.csv
+participants3_cleaned.csv
+post-checkin/
